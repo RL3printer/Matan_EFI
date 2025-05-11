@@ -1,67 +1,82 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <title>Status-pro32</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>STATUS Pro 32</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body { background-color: #f5f5f5; font-family: Arial, sans-serif; }
+    body { background-color: #f5f5f5; font-family: Arial, sans-serif; margin: 0; padding: 0; }
     .navbar { background-color: #343a40; }
     .navbar-dark .navbar-nav .nav-link { color: #fff; }
-    footer {
-      background-color: #343a40;
-      color: white;
-      text-align: center;
-      padding: 10px;
-      margin-top: 20px;
-    }
+    .container-main { padding: 20px; display: flex; justify-content: center; }
+    .card { background-color: #2e2e2e; color: white; border-radius: 6px; box-shadow: 0 2px 6px rgba(0,0,0,0.3); margin: 10px; width: 45%; }
+    .card-header { font-size: 1.2rem; border-bottom: 1px solid #444; padding: 10px; }
+    .card-body { padding: 10px; }
+    .form-control, output { background-color: #444; color: white; border: none; padding: 5px; }
+    .form-control:focus { box-shadow: none; border: 1px solid #17a2b8; }
+    .icons { position: absolute; left: 20px; top: 60px; display: flex; flex-direction: column; gap: 10px; }
+    .icons img { width: 30px; cursor: pointer; }
+    footer { background-color: #343a40; color: white; text-align: center; padding: 10px; }
   </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark">
-  <a class="navbar-brand" href="index.html">EFI</a>
+  <a class="navbar-brand" href="#"><img src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Efi_logo.svg" alt="EFI" height="30"></a>
   <div class="collapse navbar-collapse">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item dropdown">
-        <a class="nav-link dropdown-toggle" href="#" id="statusDropdown" data-toggle="dropdown">Status</a>
-        <div class="dropdown-menu">
-          <a class="dropdown-item" href="status.html">Status</a>
-          <a class="dropdown-item" href="vutek-matan.html">Vutek/Matan</a>
-          <a class="dropdown-item" href="status-pro32.html">Status PRO 32</a>
+        <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">Status</a>
+        <div class="dropdown-menu dropdown-menu-left bg-dark">
+          <a class="dropdown-item text-white" href="#">Status</a>
+          <a class="dropdown-item text-white" href="#">Vutek/Matan</a>
+          <a class="dropdown-item text-white" href="#">Status PRO 32</a>
         </div>
       </li>
-      <li class="nav-item"><a class="nav-link" href="vutek-rplus.html">Vutek r+</a></li>
-      <li class="nav-item"><a class="nav-link" href="matan.html">Matan</a></li>
-      <li class="nav-item"><a class="nav-link" href="vutek-d.html">Vutek D</a></li>
-      <li class="nav-item"><a class="nav-link" href="vutek-q.html">Vutek Q</a></li>
-      <li class="nav-item"><a class="nav-link" href="pro32.html">Pro 32</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Vutek r+</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Matan</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Vutek D</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Vutek Q</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">Pro 32</a></li>
     </ul>
   </div>
 </nav>
-<div class="container mt-4">
 
-<div class="card p-4">
-  <h4>New Y Encoder Resolution</h4>
-  <form oninput="x.value = (a.value * (1500 + (1500 - b.value)) / 1500).toFixed(3)">
-    <label for="a">Old Encoder Resolution:</label>
-    <input type="number" id="a" name="a" value="26205.191" step="any" class="form-control">
-
-    <label for="b">Actual Measurement (~1500mm):</label>
-    <input type="number" id="b" name="b" step="any" class="form-control">
-
-    <label for="x">New Y Resolution Result:</label>
-    <output name="x" for="a b" class="form-control" style="color:lime;"></output>
-  </form>
-  <hr style="background: #555;">
-  <p>if less than 150 mm is indicated, indicate the deviation is minus(-).</p>
-  <p>if more than 150 mm is indicated, indicate which deviation is plus(+).</p>
-  <p><strong>for example:</strong><br>149 mm, specify -1<br>151 mm, specify 1</p>
+<div class="icons">
+  <img src="img/pdficon.png" alt="PDF">
+  <img src="img/backbutton.png" alt="Back">
 </div>
 
+<div class="container-main">
+  <div class="card">
+    <div class="card-header">Scale for Servo</div>
+    <div class="card-body">
+      <form oninput="x.value=(a.value*(1500+(1500-b.value))/1500).toFixed(3)">
+        <input type="number" id="a" value="26205.191" class="form-control" step="any"><br>
+        <input type="number" id="b" placeholder="mm" class="form-control" step="any"><button class="btn btn-info" type="button" onclick="">OK</button>
+        <output name="x" class="form-control mt-3">26205.191</output>
+      </form>
+      <hr style="background:#555">
+      <p>if less than 150 mm is indicated, indicate the deviation is minus(-).</p>
+      <p>if more than 150 mm is indicated, indicate which deviation is plus(+).</p>
+      <p><strong>for example:</strong><br>149 mm, specify -1<br>151 mm, specify 1</p>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-header">Voltage tolerance</div>
+    <div class="card-body">
+      <p><strong>GEN 5</strong><br>~(14.0v - 15.5v)<br>Delta V [-3.50]</p>
+      <hr style="background:#555">
+      <p><strong>GEN 3</strong><br>Normal Drops: ~(35.0v - 38.0v)<br>Delta V [+5.20]</p>
+      <p>Small Drops: ~(25.0v - 28.0v)<br>Delta V [0.00]</p>
+    </div>
+  </div>
 </div>
+
 <footer>
-  Created by ©Tom Zohar 2019-2025
+  Created by ©Tom Zohar 2019-2025 V3
 </footer>
+
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
