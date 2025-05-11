@@ -2,12 +2,18 @@
 <html lang="he" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Status Pro 32</title>
+  <!-- Bootstrap CSS -->
   <link
     href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
     rel="stylesheet"
   >
+  <!-- FontAwesome for Icons -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+  />
   <style>
     body {
       background-color: #1f1f23;
@@ -76,8 +82,12 @@
       gap: 12px;
       z-index: 1000;
     }
-    .icons img {
-      width: 32px;
+    .icons a {
+      color: #fff;
+      text-decoration: none;
+    }
+    .icons i {
+      font-size: 1.8rem;
       cursor: pointer;
     }
     footer {
@@ -93,130 +103,145 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark">
-  <a class="navbar-brand" href="#">
-    <img
-      src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Efi_logo.svg"
-      alt="EFI" height="30"
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="#">
+      <img
+        src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Efi_logo.svg"
+        alt="EFI"
+        height="30"
+      >
+    </a>
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#mainNav"
+      aria-controls="mainNav"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
     >
-  </a>
-  <button
-    class="navbar-toggler"
-    type="button"
-    data-toggle="collapse"
-    data-target="#mainNav"
-  >
-    <span class="navbar-toggler-icon"></span>
-  </button>
-  <div class="collapse navbar-collapse" id="mainNav">
-    <ul class="navbar-nav mr-auto">
-      <li class="nav-item dropdown">
-        <a
-          class="nav-link dropdown-toggle"
-          href="#"
-          id="statusDropdown"
-          role="button"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-        >
-          Status
-        </a>
-        <div
-          class="dropdown-menu dropdown-menu-right bg-dark"
-          aria-labelledby="statusDropdown"
-        >
-          <a class="dropdown-item text-white" href="#">Status</a>
-          <a class="dropdown-item text-white" href="#">Vutek/Matan</a>
-          <a class="dropdown-item text-white" href="#">Status PRO 32</a>
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="mainNav">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item dropdown">
+          <a
+            class="nav-link dropdown-toggle"
+            href="#"
+            id="statusDropdown"
+            data-toggle="dropdown"
+            aria-haspopup="true"
+            aria-expanded="false"
+          >
+            Status
+          </a>
+          <div
+            class="dropdown-menu dropdown-menu-right bg-dark"
+            aria-labelledby="statusDropdown"
+          >
+            <a class="dropdown-item text-white" href="#">Status</a>
+            <a class="dropdown-item text-white" href="#">Vutek/Matan</a>
+            <a class="dropdown-item text-white" href="#">Status PRO 32</a>
+          </div>
+        </li>
+        <li class="nav-item"><a class="nav-link" href="#">Vutek r+</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Matan</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Vutek D</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Vutek Q</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Pro 32</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Floating Icons -->
+  <div class="icons">
+    <!-- PDF -->
+    <a href="your-document.pdf" target="_blank" title="PDF">
+      <i class="fas fa-file-pdf"></i>
+    </a>
+    <!-- Back -->
+    <a href="javascript:history.back()" title="Back">
+      <i class="fas fa-arrow-left"></i>
+    </a>
+    <!-- RFI -->
+    <a href="rfi.html" title="RFI">
+      <i class="fas fa-info-circle"></i>
+    </a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="container-main">
+    <!-- Scale for Servo Card -->
+    <div class="card">
+      <div class="card-header">Scale for Servo</div>
+      <div class="card-body">
+        <div class="form-group">
+          <label for="inputValue">ערך התחלתי:</label>
+          <input
+            type="number"
+            id="inputValue"
+            class="form-control"
+            value="26205.191"
+            step="any"
+          >
         </div>
-      </li>
-      <li class="nav-item"><a class="nav-link" href="#">Vutek r+</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Matan</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Vutek D</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Vutek Q</a></li>
-      <li class="nav-item"><a class="nav-link" href="#">Pro 32</a></li>
-    </ul>
-  </div>
-</nav>
+        <div class="form-group">
+          <label for="deviation">סטייה (mm):</label>
+          <input
+            type="number"
+            id="deviation"
+            class="form-control"
+            placeholder="למשל: 149 או 151"
+            step="any"
+          >
+        </div>
+        <button id="calcBtn" class="btn btn-info align-self-start">OK</button>
+        <div class="form-group mt-3">
+          <label>תוצאה:</label>
+          <output id="result" class="form-control">26205.191</output>
+        </div>
+        <hr>
+        <p>אם פחות מ-150 mm, סטייה מינוס (–)</p>
+        <p>אם יותר מ-150 mm, סטייה פלוס (+)</p>
+        <p><strong>לדוגמה:</strong><br>149 → –1<br>151 → +1</p>
+      </div>
+    </div>
 
-<div class="icons">
-  <img src="img/pdficon.png" alt="PDF">
-  <img src="img/backbutton.png" alt="Back">
-</div>
-
-<div class="container-main">
-  <!-- כרטיס חישוב סקלת הסרוו -->
-  <div class="card">
-    <div class="card-header">Scale for Servo</div>
-    <div class="card-body">
-      <div class="form-group">
-        <label for="inputValue">ערך התחלתי:</label>
-        <input
-          type="number"
-          id="inputValue"
-          class="form-control"
-          value="26205.191"
-          step="any"
-        >
+    <!-- Voltage Tolerance Card -->
+    <div class="card">
+      <div class="card-header">Voltage tolerance</div>
+      <div class="card-body">
+        <p><strong>GEN 5</strong><br>~(14.0v – 15.5v)<br>Delta V [–3.50]</p>
+        <hr>
+        <p><strong>GEN 3</strong><br>Normal Drops: ~(35.0v – 38.0v)<br>Delta V [+5.20]</p>
+        <p>Small Drops: ~(25.0v – 28.0v)<br>Delta V [0.00]</p>
       </div>
-      <div class="form-group">
-        <label for="deviation">סטייה (mm):</label>
-        <input
-          type="number"
-          id="deviation"
-          class="form-control"
-          placeholder="למשל: 149 או 151"
-          step="any"
-        >
-      </div>
-      <button
-        id="calcBtn"
-        class="btn btn-info align-self-start"
-      >OK</button>
-      <div class="form-group mt-3">
-        <label>תוצאה:</label>
-        <output id="result" class="form-control">26205.191</output>
-      </div>
-      <hr>
-      <p>אם פחות מ-150 mm, סטייה מינוס (–)</p>
-      <p>אם יותר מ-150 mm, סטייה פלוס (+)</p>
-      <p><strong>לדוגמה:</strong><br>149 → –1<br>151 → +1</p>
     </div>
   </div>
 
-  <!-- כרטיס טולרנס וולטג' -->
-  <div class="card">
-    <div class="card-header">Voltage tolerance</div>
-    <div class="card-body">
-      <p><strong>GEN 5</strong><br>~(14.0v – 15.5v)<br>Delta V [–3.50]</p>
-      <hr>
-      <p><strong>GEN 3</strong><br>Normal Drops: ~(35.0v – 38.0v)<br>Delta V [+5.20]</p>
-      <p>Small Drops: ~(25.0v – 28.0v)<br>Delta V [0.00]</p>
-    </div>
-  </div>
-</div>
+  <!-- Footer -->
+  <footer>
+    Created by ©Tom Zohar 2019-2025 V3
+  </footer>
 
-<footer>
-  Created by ©Tom Zohar 2019-2025 V3
-</footer>
-
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script
-  src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
-></script>
-<script>
-  document.getElementById('calcBtn').addEventListener('click', () => {
-    const base = parseFloat(document.getElementById('inputValue').value) || 0;
-    const mm   = parseFloat(document.getElementById('deviation').value) || 0;
-    // במקרה שהמשתמש הכניס ערך פחות מ־150, סטייה שלילית
-    const sign = mm < 150 ? -1 : +1;
-    // נוסחת ההמרה לפי הבקשה
-    const res  = (base * (1500 + (1500 - mm)) / 1500).toFixed(3);
-    document.getElementById('result').value = res;
-    // אם רצית במקום תוצאה גם להראות את ה-sign:
-    // console.log('Deviation sign:', sign);
-  });
-</script>
+  <!-- JS Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"
+  ></script>
+  <script>
+    document.getElementById('calcBtn').addEventListener('click', () => {
+      const base = parseFloat(document.getElementById('inputValue').value) || 0;
+      const mm   = parseFloat(document.getElementById('deviation').value) || 0;
+      // סימן הסטייה
+      const sign = mm < 150 ? -1 : +1;
+      // חישוב התוצאה
+      const res  = (base * (1500 + (1500 - mm)) / 1500).toFixed(3);
+      document.getElementById('result').value = res;
+      // אם תרצה להראות את ה-sign, אפשר להדפיס אותו בקונסול:
+      // console.log('Deviation sign:', sign);
+    });
+  </script>
 </body>
 </html>
