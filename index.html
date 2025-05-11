@@ -38,14 +38,37 @@
 
 <nav class="navbar navbar-expand-lg navbar-dark">
   <a class="navbar-brand" href="#">EFI</a>
-  <div class="collapse navbar-collapse">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav"
+          aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="mainNav">
     <ul class="navbar-nav mr-auto">
-      <li class="nav-item"><a class="nav-link" href="#">Status</a></li>
+
+      <!-- פריט ה־Status הפך ל־dropdown -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="statusDropdown" role="button"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Status
+        </a>
+        <div class="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="statusDropdown">
+          <a class="dropdown-item text-white" href="#">Vutek/Matan</a>
+          <div class="dropdown-divider" style="border-color: #555;"></div>
+          <!-- כאן הוספנו את הקישור -->
+          <a class="dropdown-item text-white" href="status-pro32.html">Status PRO 32</a>
+          <div class="dropdown-divider" style="border-color: #555;"></div>
+          <a class="dropdown-item text-white" href="#">Status PRO 33</a>
+        </div>
+      </li>
+
+      <!-- שאר הפריטים כפי שהיו כאן אתה מוסיף את השמות אב בתפריט --> 
       <li class="nav-item"><a class="nav-link" href="#">Vutek r+</a></li>
       <li class="nav-item"><a class="nav-link" href="#">Matan</a></li>
       <li class="nav-item"><a class="nav-link" href="#">Vutek D</a></li>
       <li class="nav-item"><a class="nav-link" href="#">Vutek Q</a></li>
       <li class="nav-item"><a class="nav-link" href="#">Pro 32</a></li>
+      <li class="nav-item"><a class="nav-link" href="#">VUTEK X3R&amp;X5R</a></li>
     </ul>
   </div>
 </nav>
