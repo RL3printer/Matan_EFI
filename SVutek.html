@@ -1,74 +1,123 @@
 <!DOCTYPE html>
 <html lang="he" dir="ltr">
 <head>
-  <meta charset="UTF-8">
-  <title>Pro32 Status</title>
-  <!-- Bootstrap CSS -->
+  <meta charset="UTF-8"> <!-- קידוד UTF-8 לתמיכה בעברית -->
+  <title>Pro32 Status</title> <!-- כותרת חלון הדפדפן -->
+  <!-- טעינת Bootstrap לעיצוב מהיר של טבלאות ושדות קלט -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
+    /* סגנון כללי: הסרת מרווחים ברירת מחדל של הדפדפן ורקע אפור קל */
     html, body { margin: 0; padding: 0; background: #f5f5f5; }
+    /* מיכל מרכזי לבן עם צל ומסגרת, ריווח פנימי */
     .page-wrapper { max-width: 1200px; margin: 40px auto; background: #fff; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+    /* כותרת גדולה במרכז בצבע אדום */
     h1 { color: red; text-align: center; margin-bottom: 20px; }
+    /* סקציה: גבול כהה, ריווח פנימי ושוליים תחתונים */
     .form-section { border: 1px solid #333; padding: 10px; margin-bottom: 20px; }
+    /* כותרת פנימית בצבע כתום כהה, עיבוי ומרכז */
     .section-title { color: darkorange; font-weight: bold; margin-bottom: 5px; text-align: center; }
+    /* סגנון לטבלאות עם גבול חזק */
     .table-bordered td, .table-bordered th { border: 1px solid #333 !important; }
+    /* יישור תוכן בתא עבור checkbox */
     .checkbox-cell { text-align: center; }
+    /* חלון צף: מיקום קבוע, רקע חצי שקוף, צל, פינות מעוגלות וגרירה */
     .floating-window {
       position: fixed; top: 20px; left: 20px;
-      background: rgba(255,255,255,0.9); border: 1px solid #ccc; border-radius: 8px;
-      padding: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      z-index: 2000; user-select: none; cursor: move;
-      display: flex; flex-direction: column; gap: 8px;
+      background: rgba(255,255,255,0.9);
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      padding: 8px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 2000;
+      user-select: none;
+      cursor: move;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
     }
+    /* כפתורים בחלון הצף ללא גבולות ורקע */
     .floating-window button { background: none; border: none; cursor: pointer; font-size: 20px; }
   </style>
 </head>
 <body>
+  <!-- מיכל ראשי למרכז העמוד -->
   <div class="page-wrapper">
+    <!-- כותרת דף -->
     <h1>STATUS</h1>
-    <!-- Floating menu -->
+
+    <!-- חלון צף עם פעולות מהירות -->
     <div class="floating-window" id="floatWin">
+      <!-- כפתור בית -->
       <button title="דף הבית" onclick="window.location.href='index.html'"><img src="icons/home.png" width="24" alt="Home"></button>
+      <!-- כפתור הדפסה -->
       <button title="הדפס PDF" onclick="window.print()"><img src="icons/pdf.png" width="24" alt="PDF"></button>
+      <!-- כפתור הוספת שורה -->
       <button title="הוסף שורה" onclick="addRow()"><img src="icons/add.png" width="24" alt="Add"></button>
+      <!-- כפתור הסרת שורה -->
       <button title="הסר שורה" onclick="removeRow()"><img src="icons/remove.png" width="24" alt="Remove"></button>
     </div>
 
+    <!-- מבנה גריד של Bootstrap: container ו-row למרכז ומרווח -->
     <div class="container">
       <div class="row justify-content-center">
-        <!-- Left column -->
+        <!-- עמודה שמאלית (50% רוחב ב-md ומעלה) -->
         <div class="col-md-5">
-          <!-- Customer Name -->
+          <!-- סקשן שם הלקוח -->
           <div class="form-section">
             <label><strong>Customer name:</strong></label>
             <input type="text" class="form-control" placeholder="Customer name">
           </div>
-          <!-- Configuration -->
+
+          <!-- סקשן Configuration -->
           <div class="form-section">
             <div class="section-title">Configuration</div>
             <table class="table table-bordered w-100">
-              <tr><td>Serial Number</td><td><input class="form-control" placeholder="s/n"></td></tr>
-              <tr><td>Name</td><td>
-                <select class="form-control">
-                  <option>Vutek 5r+</option>
-                  <option>Vutek 3r+</option>
-                  <option>Vutek D 5r</option>
-                  <option>Vutek D 3r</option>
-                  <option>Vutek Q 5r</option>
-                  <option>Vutek Q 3r</option>
-                  <option>Matan 5</option>
-                  <option>Matan 3</option>
-                </select>
-              </td></tr>
-              <tr><td>Type</td><td>
-                <select class="form-control mb-1"><option></option><option>4 Color</option><option>8 Color</option></select>
-                <select class="form-control mb-1"><option></option><option>White</option><option>4 Fixed White</option><option>6 Fixed White</option></select>
-                <select class="form-control"><option></option><option>Varnish</option></select>
-              </td></tr>
-              <tr><td>S/W front end</td><td><input class="form-control"></td></tr>
+              <!-- שורה: מספר סידורי -->
+              <tr>
+                <td>Serial Number</td>
+                <td><input class="form-control" placeholder="s/n"></td>
+              </tr>
+              <!-- שורה: בחירת שם מדפסת -->
+              <tr>
+                <td>Name</td>
+                <td>
+                  <select class="form-control">
+                    <option>Vutek 5r+</option>
+                    <option>Vutek 3r+</option>
+                    <option>Vutek D 5r</option>
+                    <option>Vutek D 3r</option>
+                    <option>Vutek Q 5r</option>
+                    <option>Vutek Q 3r</option>
+                    <option>Matan 5</option>
+                    <option>Matan 3</option>
+                  </select>
+                </td>
+              </tr>
+              <!-- שורה: סוג הדפסה בריבוי select -->
+              <tr>
+                <td>Type</td>
+                <td>
+                  <!-- קווים לסוג צבעי הדפסה -->
+                  <select class="form-control mb-1">
+                    <option></option><option>4 Color</option><option>8 Color</option>
+                  </select>
+                  <!-- קווים ל־White/In-line White -->
+                  <select class="form-control mb-1">
+                    <option></option><option>White</option><option>4 Fixed White</option><option>6 Fixed White</option>
+                  </select>
+                  <!-- קווים עבור וורניש -->
+                  <select class="form-control"><option></option><option>Varnish</option></select>
+                </td>
+              </tr>
+              <!-- שורה: ממשק תוכנה -->
+              <tr>
+                <td>S/W front end</td>
+                <td><input class="form-control"></td>
+              </tr>
             </table>
           </div>
-          <!-- Burn Version -->
+
+          <!-- סקשן Burn Version -->
           <div class="form-section">
             <div class="section-title">Burn Version</div>
             <table class="table table-bordered w-100">
@@ -78,11 +127,14 @@
             </table>
           </div>
         </div>
-        <!-- Right column -->
+
+        <!-- עמודה ימנית נגדית -->
         <div class="col-md-5">
+          <!-- סקשן OPTIONS INCLUDET -->
           <div class="form-section">
             <div class="section-title">OPTIONS INCLUDET</div>
             <table class="table table-bordered w-100">
+              <!-- שורות עבור כל אופציה -->
               <tr><td>MIST SEAL</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
               <tr><td>INK INCLUDET</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
               <tr><td>MIST COLLECTOR</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
@@ -102,13 +154,40 @@
       </div>
     </div>
   </div>
+
+  <!-- סקריפט לגרירת החלון הצף והוספת/הסרת שורות -->
   <script>
-    const floatWin = document.getElementById('floatWin'); let drag=false, sX, sY;
-    floatWin.addEventListener('mousedown', e=>{ if(!e.target.closest('button')){ drag=true; sX=e.clientX-floatWin.offsetLeft; sY=e.clientY-floatWin.offsetTop; }});
-    document.addEventListener('mousemove', e=>{ if(drag){ floatWin.style.left=e.clientX-sX+'px'; floatWin.style.top=e.clientY-sY+'px'; }});
-    document.addEventListener('mouseup', ()=>drag=false);
-    function addRow(){ const tbl=document.getElementById('new-line-table'), r=tbl.insertRow(); r.insertCell().innerHTML='<input class="form-control" placeholder="Description">'; r.insertCell().innerHTML='<input class="form-control" placeholder="Value">'; }
-    function removeRow(){ const tbl=document.getElementById('new-line-table'); if(tbl.rows.length) tbl.deleteRow(-1); }
+    const floatWin = document.getElementById('floatWin');
+    let drag = false, sX, sY;
+    // התחלת גרירה
+    floatWin.addEventListener('mousedown', e => {
+      if (!e.target.closest('button')) {
+        drag = true;
+        sX = e.clientX - floatWin.offsetLeft;
+        sY = e.clientY - floatWin.offsetTop;
+      }
+    });
+    // הזזת החלון
+    document.addEventListener('mousemove', e => {
+      if (drag) {
+        floatWin.style.left = e.clientX - sX + 'px';
+        floatWin.style.top = e.clientY - sY + 'px';
+      }
+    });
+    // סיום גרירה
+    document.addEventListener('mouseup', () => { drag = false; });
+    // פונקציה להוספת שורת NEW LINE
+    function addRow() {
+      const tbl = document.getElementById('new-line-table');
+      const r = tbl.insertRow();
+      r.insertCell().innerHTML = '<input class="form-control" placeholder="Description">';
+      r.insertCell().innerHTML = '<input class="form-control" placeholder="Value">';
+    }
+    // פונקציה להסרת השורה האחרונה
+    function removeRow() {
+      const tbl = document.getElementById('new-line-table');
+      if (tbl.rows.length) tbl.deleteRow(-1);
+    }
   </script>
 </body>
 </html>
