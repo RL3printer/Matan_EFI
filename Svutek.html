@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="he" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <title>Pro32 Status</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    /* כלליים */
+    html, body { direction: ltr; text-align: left; margin: 0; padding: 0; font-family: Arial, sans-serif; }
+    body { padding: 20px; }
+    h1 { color: red; text-align: center; margin-bottom: 20px; }
+    .form-section { border: 1px solid #333; padding: 10px; margin-bottom: 20px; }
+    .section-title { color: darkorange; font-weight: bold; margin-bottom: 5px; text-align: center; }
+    .table-bordered td, .table-bordered th { border: 1px solid #333 !important; }
+    .checkbox-cell { text-align: center; }
+    /* חלון צף */
+    .floating-window {
+      position: fixed; top: 20px; left: 20px;
+      background: rgba(255,255,255,0.9); border: 1px solid #ccc; border-radius: 8px;
+      padding: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+      z-index: 2000; user-select: none; cursor: move;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .floating-window button { background: none; border: none; cursor: pointer; font-size: 20px; }
+    /* שיתוף רוחב העמודות */
+    .col-half { width: 48%; display: inline-block; vertical-align: top; }
+    .spacer { width: 4%; display: inline-block; }
+    input.form-control, select.form-control { height: 30px; padding: 2px 8px; font-size: 14px; }
+    table { width: 100%; margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+  <h1>STATUS</h1>
+  <!-- חלון צף -->
+  <div class="floating-window" id="floatWin">
+    <button title="דף הבית" onclick="window.location.href='index.html'"><img src="icons/home.png" width="24" alt="Home"></button>
+    <button title="הדפס PDF" onclick="window.print()"><img src="icons/pdf.png" width="24" alt="PDF"></button>
+    <button title="הוסף שורה" onclick="addRow()"><img src="icons/add.png" width="24" alt="Add"></button>
+    <button title="הסר שורה" onclick="removeRow()"><img src="icons/remove.png" width="24" alt="Remove"></button>
+  </div>
+
+  <!-- עמודות צדדיות -->
+  <div class="col-half">
+    <!-- Customer Name -->
+    <div class="form-section">
+      <label><strong>Customer name:</strong></label>
+      <input type="text" class="form-control" placeholder="Customer name">
+    </div>
+    <!-- Configuration -->
+    <div class="form-section">
+      <div class="section-title">Configuration</div>
+      <table class="table table-bordered">
+        <tr><td>Serial Number</td><td><input class="form-control" placeholder="s/n"></td></tr>
+        <tr><td>Name</td><td><input class="form-control"></td></tr>
+        <tr><td>Type</td><td><select class="form-control"><option></option></select></td></tr>
+        <tr><td>S/W front end</td><td><input class="form-control"></td></tr>
+      </table>
+    </div>
+    <!-- Burn Version -->
+    <div class="form-section">
+      <div class="section-title">Burn Version</div>
+      <table class="table table-bordered">
+        <tr><td>Controller</td><td><input class="form-control"></td></tr>
+        <tr><td>PLC/OFEK Block</td><td><input class="form-control"></td></tr>
+        <tr><td>PLC/OFEK Machine</td><td><input class="form-control"></td></tr>
+      </table>
+    </div>
+    <!-- Computers & Plugs -->
+    <div class="form-section">
+      <div class="section-title">Computers & Plugs</div>
+      <table class="table table-bordered">
+        <tr><td>S/N Computer</td><td><input class="form-control"></td></tr>
+        <tr><td>Plug ID</td><td><input class="form-control"></td></tr>
+        <tr><td>S/N Caldera</td><td><input class="form-control"></td></tr>
+        <tr><td>Plug Caldera</td><td><input class="form-control"></td></tr>
+      </table>
+    </div>
+    <!-- For NEW data pass options -->
+    <div class="form-section">
+      <div class="section-title">For NEW data pass options</div>
+      <table class="table table-bordered">
+        <tr><td>Video card FPGA</td><td><input class="form-control" value="0x" onfocus="this.setSelectionRange(this.value.length,this.value.length)"></td></tr>
+        <tr><td>Carriage FPGA (Tarro)</td><td><input class="form-control" value="0x" onfocus="this.setSelectionRange(this.value.length,this.value.length)"></td></tr>
+        <tr><td>Id Card FPGA (Maxwell)</td><td><input class="form-control" value="0x" onfocus="this.setSelectionRange(this.value.length,this.value.length)"></td></tr>
+        <tr><td>DP SW Ver</td><td><input class="form-control"></td></tr>
+      </table>
+    </div>
+    <!-- For OLD data pass options -->
+    <div class="form-section">
+      <div class="section-title">For OLD data pass options</div>
+      <table class="table table-bordered">
+        <tr><td>PCI μC</td><td><input class="form-control"></td></tr>
+        <tr><td>PCI FPGA</td><td><input class="form-control"></td></tr>
+        <tr><td>BCC μC</td><td><input class="form-control"></td></tr>
+        <tr><td>BCC FPGA</td><td><input class="form-control"></td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="spacer"></div>
+  <div class="col-half">
+    <!-- OPTIONS INCLUDET -->
+    <div class="form-section">
+      <div class="section-title">OPTIONS INCLUDET</div>
+      <table class="table table-bordered">
+        <tr><td>MIST SEAL</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>INK INCLUDET</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>MIST COLLECTOR</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>LEDS</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>X MOTOR SUPPORT</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>MEDIA SHAFT 5.20M</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>PHOTO INTERRUPTER</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>PULS</td><td><input class="form-control" value="Wave-DRP2-T2-v2_2"></td></tr>
+        <tr><td>CUTTER</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>AIR SHAFT FRONT</td><td><select class="form-control"><option>5.20M</option><option>3.20M</option><option>1.60M</option></select></td></tr>
+        <tr><td>AIR SHAFT REAR</td><td><select class="form-control"><option>5.20M</option><option>3.20M</option><option>1.60M</option></select></td></tr>
+        <tr><td>BLOCK OUT</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>BACK LIT</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>CAMERA</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>ID BACK PRINTER</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>H DETECTOR</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>SHEET COLLECTOR</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>ONE SITE REPAIR KIT</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>INSTALLATION KIT</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>SLITTER</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>MULTI ROLL KIT</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>BALANCE T</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>BALANCE Y</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>SPREADERS KIT</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>WASTE</td><td><select class="form-control"><option></option></select></td></tr>
+        <tr><td>CHILLER</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>ORANGE CABLES 110V</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>ROLL & TYPE</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>INSPECTION KIT</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>SCANNER</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+        <tr><td>EDGE MEDIA GUARD</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // גרירת החלון הצף
+    const floatWin = document.getElementById('floatWin');
+    let drag=false, startX, startY;
+    floatWin.addEventListener('mousedown', e=>{ if(!e.target.closest('button')){ drag=true; startX=e.clientX-floatWin.offsetLeft; startY=e.clientY-floatWin.offsetTop; }});
+    document.addEventListener('mousemove', e=>{ if(drag){ floatWin.style.left=e.clientX-startX+'px'; floatWin.style.top=e.clientY-startY+'px'; }});
+    document.addEventListener('mouseup', ()=>drag=false);
+    // פונקציות שורה
+    function addRow(){ const tbl=document.getElementById('new-line-table'), r=tbl.insertRow(); r.insertCell().innerHTML='<input class="form-control" placeholder="Description">'; r.insertCell().innerHTML='<input class="form-control" placeholder="Value">'; }
+    function removeRow(){ const tbl=document.getElementById('new-line-table'); if(tbl.rows.length) tbl.deleteRow(-1); }
+  </script>
+</body>
+</html>
