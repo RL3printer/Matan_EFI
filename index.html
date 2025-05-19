@@ -1,480 +1,210 @@
+
 <!DOCTYPE html>
-<html lang="he" dir="ltr">
+<html lang="en" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <title>Pro 32</title>
+  <title>EFI Tools - Tom Zohar</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    /* עיצוב בסיסי של גוף הדף */
     body {
-      background: #fff;
+      background-color: #f5f5f5;
       font-family: Arial, sans-serif;
-      color: #111;
     }
-    /* עיצוב כותרת ראשית */
-    h1 {
-      color: #e53935;
-      text-align: center;
-      margin: 0 0 10px 0;
-      font-size: 2.2rem;
-      letter-spacing: 1px;
+    .navbar {
+      background-color: #343a40;
     }
-    /* קונטיינר ראשי שמרכז את שתי העמודות */
-    .main-container {
-      margin: 0 auto 0 auto;
-      max-width: 1200px;
-      display: flex; /* שתי עמודות זו לצד זו */
-      gap: 24px;
-      justify-content: center;
-      align-items: flex-start;
+    .navbar-dark .navbar-nav .nav-link {
+      color: #fff;
     }
-    /* עיצוב כל עמודה (שמאלית/ימנית) */
-    .col {
-      flex: 1 1 0;
-      display: flex;
-      flex-direction: column;
-      gap: 14px;
-      min-width: 0;
+    .card {
+      background-color: #2e2e2e;
+      color: white;
+      margin: 20px;
+      border-radius: 10px;
     }
-    /* עיצוב כותרות הסקשנים */
-    .section-title {
-      color: #ff9900;
-      font-weight: bold;
-      font-size: 1.1rem;
-      text-align: center;
-      border-bottom: 2px solid #ff9900;
-      margin-bottom: 0;
-      margin-top: 8px;
-      padding-bottom: 2px;
-      letter-spacing: 0.2px;
-      background: #fff;
-    }
-    /* עיצוב כל הטבלאות */
-    .custom-table {
+    .card input, .card select, .card output {
+      margin-top: 10px;
       width: 100%;
-      border: 1px solid #bdbdbd;
-      border-collapse: collapse;
-      background: #fff;
-      font-size: 1rem;
     }
-    /* עיצוב תאים בטבלאות */
-    .custom-table th, .custom-table td {
-      border: 1px solid #bdbdbd;
-      padding: 6px 8px;
-      vertical-align: middle;
-    }
-    /* עיצוב כותרות עמודות בטבלאות */
-    .custom-table th {
-      background: #fff;
-      color: #111;
+    footer {
+      background-color: #343a40;
+      color: white;
       text-align: center;
-      font-weight: bold;
-    }
-    /* עיצוב שדות טקסט בטבלאות */
-    .custom-table input[type="text"] {
-      width: 98%;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-      padding: 2px 6px;
-      font-size: 1rem;
-      background: #fafafa;
-      transition: border 0.2s;
-    }
-    /* שינוי צבע גבול של שדה טקסט בפוקוס */
-    .custom-table input[type="text"]:focus {
-      border: 1.5px solid #ff9900;
-      outline: none;
-      background: #fffbe8;
-    }
-    /* עיצוב שדות אופציות */
-    .options-table td {
-      text-align: left;
-    }
-    /* עיצוב תיבות סימון בטבלת אופציות */
-    .options-table input[type="checkbox"] {
-      display: block;
-      margin: 0 auto;
-      transform: scale(1.1);
-    }
-    /* עיצוב שדות טקסט בטבלת אופציות */
-    .options-table input[type="text"] {
-      width: 70px;
-      text-align: center;
-      margin: 0 auto;
-      font-size: 1rem;
-      border: 1px solid #bdbdbd;
-      border-radius: 3px;
-      padding: 2px 4px;
-    }
-    /* עיצוב תווית לשדה לקוח */
-    .form-label {
-      font-weight: bold;
-      font-size: 1.07rem;
-      margin-bottom: 0;
-      color: #222;
-    }
-    /* עיצוב שדה לקוח */
-    .customer-input {
-      border: 2px solid #ff9900;
-      border-radius: 4px;
-      width: 220px;
-      display: inline-block;
-      margin-left: 10px;
-      padding: 2px 8px;
-      font-size: 1rem;
-      background: #fafafa;
-      transition: border 0.2s;
-    }
-    /* שינוי גבול שדה לקוח בפוקוס */
-    .customer-input:focus {
-      border: 2px solid #e53935;
-      outline: none;
-      background: #fffbe8;
-    }
-    /* שורת שדה הלקוח */
-    .customer-row {
-      margin-bottom: 14px;
-      margin-top: 18px;
-      text-align: left;
-      max-width: 1200px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    /* עיצוב אזור ההערות */
-    .notes-section {
-      max-width: 1200px;
-      margin: 30px auto 0 auto;
-      padding: 0 10px;
-    }
-    /* עיצוב תווית לאזור ההערות */
-    .notes-section label {
-      font-weight: bold;
-      color: #ff9900;
-      font-size: 1.07rem;
-      margin-bottom: 2px;
-      display: block;
-    }
-    /* עיצוב תיבת טקסט להערות */
-    .notes-section textarea {
-      width: 100%;
-      min-height: 60px;
-      border: 1.5px solid #bdbdbd;
-      border-radius: 4px;
-      padding: 6px 8px;
-      font-size: 1rem;
-      background: #fafafa;
-      resize: vertical;
-      transition: border 0.2s;
-    }
-    /* שינוי גבול תיבת הערות בפוקוס */
-    .notes-section textarea:focus {
-      border: 1.5px solid #ff9900;
-      outline: none;
-      background: #fffbe8;
-    }
-    /* חלון צף עם אייקונים */
-    .floating-window {
-      position: fixed;
-      top: 24px;
-      left: 24px;
-      background: #ffffffee;
-      border: 1.5px solid #ccc;
-      border-radius: 12px;
-      padding: 10px 18px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.13);
-      z-index: 2000;
-      cursor: move;
-      display: flex;
-      gap: 16px;
-      align-items: center;
-      user-select: none;
-    }
-    /* עיצוב כפתורים בחלון הצף */
-    .floating-window button {
-      background: none;
-      border: none;
-      padding: 0;
-      cursor: pointer;
-      pointer-events: auto;
-      transition: transform 0.12s;
-    }
-    /* הגדלת כפתור בהובר */
-    .floating-window button:hover {
-      transform: scale(1.08);
-    }
-    /* עיצוב תמונה של אייקון בחלון הצף */
-    .floating-window img {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: #fff;
-      border: 1.5px solid #ff9900;
-      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
-      object-fit: cover;
-      transition: box-shadow 0.2s;
-    }
-    /* הצללה נוספת לאייקון בהובר */
-    .floating-window img:hover {
-      box-shadow: 0 3px 12px rgba(255,153,0,0.19);
-    }
-    /* רספונסיביות למסכים קטנים */
-    @media (max-width: 900px) {
-      .main-container {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 0 2vw;
-        max-width: 98vw;
-        gap: 0;
-      }
-      .col {
-        min-width: 0;
-        max-width: 100%;
-      }
-      .notes-section, .customer-row {
-        max-width: 98vw;
-      }
-      .floating-window {
-        left: 8px;
-        top: 8px;
-        padding: 6px 8px;
-        gap: 8px;
-      }
-      .floating-window img {
-        width: 36px;
-        height: 36px;
-      }
-    }
-    /* עיצוב הדפסה - הכל נכנס לעמוד אחד לרוחב (landscape) */
-    @media print {
-      @page {
-        size: landscape;
-        margin: 0.5cm;
-      }
-      html, body {
-        background: #fff !important;
-        color: #111 !important;
-        width: 100vw;
-        height: 100vh;
-        font-size: 11px !important;
-        margin: 0;
-        padding: 0;
-        box-shadow: none !important;
-      }
-      h1 {
-        font-size: 1.2rem !important;
-        margin: 0 0 6px 0 !important;
-      }
-      .main-container,
-      .customer-row,
-      .notes-section {
-        max-width: 100vw !important;
-        margin: 0 !important;
-        padding: 0 !important;
-        box-shadow: none !important;
-        background: #fff !important;
-      }
-      .main-container {
-        gap: 8px !important;
-      }
-      .col {
-        gap: 5px !important;
-      }
-      .section-title {
-        font-size: 0.98rem !important;
-        padding-bottom: 1px !important;
-        margin-top: 4px !important;
-        margin-bottom: 0 !important;
-      }
-      .custom-table,
-      .custom-table th, .custom-table td {
-        font-size: 0.95em !important;
-        padding: 2px 3px !important;
-        border-width: 1px !important;
-      }
-      .custom-table input[type="text"],
-      .options-table input[type="text"] {
-        font-size: 0.95em !important;
-        padding: 1px 2px !important;
-        width: 95% !important;
-      }
-      .notes-section textarea {
-        font-size: 0.95em !important;
-        min-height: 30px !important;
-        padding: 2px 4px !important;
-      }
-      .floating-window {
-        display: none !important; /* לא להדפיס את החלון הצף */
-      }
+      padding: 10px;
+      margin-top: 20px;
     }
   </style>
 </head>
 <body>
-  <!-- חלון צף עם שני אייקונים (PDF וחזרה) -->
-  <div class="floating-window" id="floatWin">
-    <!-- כפתור הדפסה -->
-    <button title="הצג כ-PDF" onclick="window.print()">
-      <img src="https://raw.githubusercontent.com/RL3printer/Matan_EFI/main/icons/pdficon.png" alt="PDF">
-    </button>
-    <!-- כפתור חזרה לדף הבית -->
-    <button title="חזרה לדף הבית" onclick="window.location.href='index.html'">
-      <img src="https://raw.githubusercontent.com/RL3printer/Matan_EFI/main/icons/backIcon.jpg" alt="Home">
-    </button>
-  </div>
 
-  <!-- כותרת ראשית -->
-  <h1>STATUS Pro 32</h1>
-  <!-- שדה לקוח -->
-  <div class="customer-row">
-    <label class="form-label" for="customerName">Customer name:</label>
-    <input type="text" class="customer-input" id="customerName" name="customerName" placeholder="הזן שם לקוח">
+<nav class="navbar navbar-expand-lg navbar-dark">
+  <a class="navbar-brand" href="#">EFI</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mainNav"
+          aria-controls="mainNav" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="mainNav">
+    <ul class="navbar-nav mr-auto">
+
+      <!-- פריט ה־Status הפך ל־dropdown -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="statusDropdown" role="button"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Status
+        </a>
+        <div class="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="statusDropdown">
+          <a class="dropdown-item text-white" href="SVutek.html">Vutek</a>
+         <div class="dropdown-divider" style="border-color: #555;"></div>
+          <a class="dropdown-item text-white" href="SPRO.html">PRO</a>
+        </div>
+      </li>
+
+	   <!-- פריט ה־MATAN הפך ל־dropdown -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="statusDropdown" role="button"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Matan
+        </a>
+        <div class="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="statusDropdown">
+          
+          <!-- כאן הוספנו את הקישור -->
+          <a class="dropdown-item text-white" href="Matan 5M.html">Matan 5M</a>
+          <div class="dropdown-divider" style="border-color: #555;"></div>
+          <a class="dropdown-item text-white" href="Matan 3M.html">Matan 3M</a>
+        </div>
+     
+      </li>
+	  <!-- פריט ה־Vutek DR  הפך ל־dropdown -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="statusDropdown" role="button"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Vutek DR
+        </a>
+        <div class="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="statusDropdown">
+          
+          <!-- כאן הוספנו את הקישור -->
+          <a class="dropdown-item text-white" href="Vutek D 5r.html">Vutek D 5r</a>
+          <div class="dropdown-divider" style="border-color: #555;"></div>
+          <a class="dropdown-item text-white" href="Vutek D 3r.html">Vutek D 3r</a>
+        </div>
+      </li>
+	   </li>
+	<!-- פריט ה־Vutek R+ הפך ל־dropdown -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="statusDropdown" role="button"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Vutek R
+        </a>
+        <div class="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="statusDropdown">
+         
+          <!-- כאן הוספנו את הקישור -->
+          <a class="dropdown-item text-white" href="Vutek5R+.html">Vutek5R+</a>
+          <div class="dropdown-divider" style="border-color: #555;"></div>
+          <a class="dropdown-item text-white" href=""Vutek3R+.html"">Vutek3R+</a>
+        </div>
+	  
+	  <!-- פריט ה־ Vutek QR  הפך ל־dropdown -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="statusDropdown" role="button"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+           Vutek QR 
+        </a>
+        <div class="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="statusDropdown">
+          
+          <!-- כאן הוספנו את הקישור -->
+          <a class="dropdown-item text-white" href=" Vutek QR 5.html"> Vutek Q5R </a>
+          <div class="dropdown-divider" style="border-color: #555;"></div>
+          <a class="dropdown-item text-white" href=" Vutek QR 3.html"> Vutek Q3R </a>
+        </div>
+      </li>
+	  
+	
+	    
+	  <!-- פריט ה־ Vutek XR  הפך ל־dropdown -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="statusDropdown" role="button"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Vutek XR 
+        </a>
+        <div class="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="statusDropdown">
+          
+          <!-- כאן הוספנו את הקישור -->
+          <a class="dropdown-item text-white" href=" Vutek X5R.html"> Vutek X5R </a>
+          <div class="dropdown-divider" style="border-color: #555;"></div>
+          <a class="dropdown-item text-white" href=" Vutek X5R.html"> Vutek X3R </a>
+        </div>
+      </li>
+	  
+	    
+	  
+	  <!-- פריט ה־ PRO  הפך ל־dropdown -->
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="statusDropdown" role="button"
+           data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          PRO 
+        </a>
+        <div class="dropdown-menu dropdown-menu-right bg-dark" aria-labelledby="statusDropdown">
+          
+          <!-- כאן הוספנו את הקישור -->
+          <a class="dropdown-item text-white" href=" PRO32.html"> PRO32 </a>
+          <div class="dropdown-divider" style="border-color: #555;"></div>
+          <a class="dropdown-item text-white" href=" PRO33.html"> PRO33 </a>
+        </div>
+      </li>
+	
+	  
+	  
+	  
+	  
+      <!-- שאר הפריטים כפי שהיו כאן אתה מוסיף את השמות אב בתפריט --> 
+      
+     
+     
+      <li class="nav-item"><a class="nav-link" href="#">EFI OPTION</a></li>
+    </ul>
   </div>
-  <!-- שתי עמודות של טבלאות -->
-  <div class="main-container">
-    <!-- עמודה שמאלית -->
-    <div class="col">
-      <!-- טבלת קונפיגורציה -->
-      <div>
-        <div class="section-title">Configuration</div>
-        <table class="custom-table">
-          <tr>
-            <td>Serial Number <!-- מספר סידורי --></td>
-            <td><input type="text" placeholder="Enter serial"></td>
-          </tr>
-          <tr>
-            <td>Model <!-- דגם --></td>
-            <td><input type="text" value="PRO 32+"></td>
-          </tr>
-          <tr>
-            <td>White options <!-- אפשרות צבע לבן --></td>
-            <td><input type="checkbox"></td>
-          </tr>
-          <tr>
-            <td>S/W front end <!-- גרסת תוכנה --></td>
-            <td><input type="text"></td>
-          </tr>
-        </table>
-      </div>
-      <!-- טבלת מחשבים ותקעים -->
-      <div>
-        <div class="section-title">Computers & Plugs</div>
-        <table class="custom-table">
-          <tr>
-            <td>S/N Computer <!-- מספר מחשב --></td>
-            <td><input type="text"></td>
-          </tr>
-          <tr>
-            <td>Plug ID <!-- מזהה תקע --></td>
-            <td><input type="text"></td>
-          </tr>
-        </table>
-      </div>
-      <!-- טבלת נתוני FPGA -->
-      <div>
-        <div class="section-title">For NEW data pass options</div>
-        <table class="custom-table">
-          <tr>
-            <td>Video card FPGA (Ferrari) <!-- כרטיס וידאו FPGA --></td>
-            <td><input type="text" value="0x"></td>
-          </tr>
-          <tr>
-            <td>Carriage FPGA (Tarro) <!-- FPGA מנוע --></td>
-            <td><input type="text" value="0x"></td>
-          </tr>
-          <tr>
-            <td>Id Card FPGA (Maxwell) <!-- FPGA מזהה --></td>
-            <td><input type="text" value="0x"></td>
-          </tr>
-          <tr>
-            <td>DP SW Ver <!-- גרסת תוכנה DP --></td>
-            <td><input type="text"></td>
-          </tr>
-        </table>
+</nav>
+<!-- חישוב Y --> 
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card p-4">
+        <h4>New Y Encoder Resolution</h4>
+        <form oninput="x.value = (a.value * (1500 + (1500 - b.value)) / 1500).toFixed(3)">
+          <label for="a">Old Encoder Resolution:</label>
+          <input type="number" id="a" name="a" value="26205.191" step="any" class="form-control">
+
+          <label for="b">Actual Measurement (~1500mm):</label>
+          <input type="number" id="b" name="b" step="any" class="form-control">
+
+          <label for="x">New Y Resolution Result:</label>
+          <output name="x" for="a b" class="form-control" style="color:lime;"></output>
+        </form>
+
+        <hr style="background: #555;">
+        <p>if less than 150 mm is indicated, indicate the deviation is minus(-).</p>
+        <p>if more than 150 mm is indicated, indicate which deviation is plus(+).</p>
+        <p><strong>for example:</strong><br>149 mm, specify -1<br>151 mm, specify 1</p>
       </div>
     </div>
-    <!-- עמודה ימנית -->
-    <div class="col">
-      <!-- טבלת גרסאות BURN -->
-      <div>
-        <div class="section-title">Burn Version</div>
-        <table class="custom-table">
-          <tr>
-            <td>Controller <!-- בקר --></td>
-            <td><input type="text"></td>
-          </tr>
-          <tr>
-            <td>PLC Block <!-- בלוק PLC --></td>
-            <td><input type="text"></td>
-          </tr>
-          <tr>
-            <td>PLC Machine <!-- PLC מכונה --></td>
-            <td><input type="text"></td>
-          </tr>
-        </table>
-      </div>
-      <!-- טבלת אופציות -->
-      <div>
-        <div class="section-title">OPTIONS INCLUDET</div>
-        <table class="custom-table options-table">
-          <tr>
-            <td>BLOCK OUT <!-- חסימת יציאה --></td>
-            <td><input type="checkbox"></td>
-          </tr>
-          <tr>
-            <td>AUTOMATIC BACKLIT FOR PRO 32R+ <!-- תאורה אחורית אוטומטית --></td>
-            <td><input type="checkbox"></td>
-          </tr>
-          <tr>
-            <td>EDGE GUARD <!-- מגן קצה --></td>
-            <td><input type="text" placeholder="№ of set"></td>
-          </tr>
-          <tr>
-            <td>DUAL ROLL 1.6M*2 SPLIT SHAFTS – LOADING FOR PRO 32R+ <!-- גלילים כפולים טעינה --></td>
-            <td><input type="text"></td>
-          </tr>
-          <tr>
-            <td>DUAL ROLL 1.6M*2 SPLIT SHAFTS – COLLECTION FOR PRO 32R+ <!-- גלילים כפולים איסוף --></td>
-            <td><input type="text"></td>
-          </tr>
-          <tr>
-            <td>SLITTER FOR PRO 32R+ <!-- חותך --></td>
-            <td><input type="text"></td>
-          </tr>
-          <tr>
-            <td>H-DETECTOR <!-- גלאי H --></td>
-            <td><input type="checkbox"></td>
-          </tr>
-          <tr>
-            <td>CHILLER <!-- צ'ילר --></td>
-            <td><input type="checkbox"></td>
-          </tr>
-          <tr>
-            <td>ONE SITE REPAIR KIT <!-- ערכת תיקון --></td>
-            <td><input type="checkbox"></td>
-          </tr>
-        </table>
+    <div class="col-md-6">
+      <div class="card p-4">
+        <h4>Voltage tolerance</h4>
+        <p><strong>GEN 5</strong><br>~(14.0v - 15.5v)<br>Delta V [-3.50]</p>
+        <hr style="background: #555;">
+        <p><strong>GEN 3</strong><br>Normal Drops: ~(35.0v - 38.0v)<br>Delta V [+5.20]</p>
+        <p>Small Drops: ~(25.0v - 28.0v)<br>Delta V [0.00]</p>
       </div>
     </div>
   </div>
-  <!-- אזור להערות חופשיות -->
-  <div class="notes-section">
-    <label for="notes">הערות נוספות:</label>
-    <textarea id="notes" name="notes" placeholder="כתוב כאן הערות או מידע נוסף..."></textarea>
-  </div>
-  <script>
-    // פונקציה לגרירת החלון הצף עם העכבר
-    const floatWin = document.getElementById('floatWin');
-    let isDragging = false, startX, startY;
-    floatWin.addEventListener('mousedown', e => {
-      if (e.target.closest('button')) return; // לא לאפשר גרירה כשלוחצים על כפתור
-      isDragging = true;
-      startX = e.clientX - floatWin.offsetLeft;
-      startY = e.clientY - floatWin.offsetTop;
-    });
-    document.addEventListener('mousemove', e => {
-      if (!isDragging) return;
-      floatWin.style.left = (e.clientX - startX) + 'px';
-      floatWin.style.top  = (e.clientY - startY) + 'px';
-    });
-    document.addEventListener('mouseup', () => { isDragging = false; });
-  </script>
+</div>
+
+<footer>
+  Created by ©Tom Zohar 2019-2025
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
