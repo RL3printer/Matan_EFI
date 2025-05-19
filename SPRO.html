@@ -1,123 +1,470 @@
 <!DOCTYPE html>
 <html lang="he" dir="ltr">
 <head>
-  <meta charset="UTF-8"> <!-- קידוד UTF-8 לתמיכה בעברית -->
-  <title>Pro32</title> <!-- כותרת העמוד -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet"> <!-- טעינת Bootstrap -->
+  <meta charset="UTF-8">
+  <title>Pro 32</title>
   <style>
-    /* גבולות כהים יותר לטבלאות */
-    .table-bordered td, .table-bordered th { border: 1px solid #333 !important; }
-    /* יישור שמאלי לבלוק שדות פשוטים */
-    .form-group { margin: 0 auto 10px 0; }
-    /* יישור גלובלי לכיוון LTR וטקסט לשמאל */
-    html, body { direction: ltr; text-align: left; }
-    /* סגנון גוף הדף */
-    body { padding: 20px 250px; font-family: Arial, sans-serif; }
-    /* כותרת ראשית */
-    h1 { color: red; text-align: center; margin-bottom: 30px; }
-    /* כותרות סקשנים */
-    .section-title { color: darkorange; font-weight: bold; margin-top: 20px; }
-    /* עיצוב בלוקי טופס */
-    .form-section { border: 1px solid #333; padding: 5px; margin: 0 auto 20px 0; }
-    /* יישור מרכזי ל-checkbox */
-    .checkbox-cell { text-align: center; }
-    /* רקע לשדות readonly */
-    .form-control[readonly] { background-color: #f9f9f9; }
-    /* סגנון החלון הצף */
-    .floating-window {
-      position: fixed; top: 20px; left: 20px;
-      background-color: #ffffffee; border: 1px solid #ccc; border-radius: 10px;
-      padding: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.2);
-      z-index: 2000; cursor: move; display: flex;
-      flex-direction: column; gap: 10px; user-select: none;
+    /* עיצוב בסיסי של גוף הדף */
+    body {
+      background: #fff;
+      font-family: Arial, sans-serif;
+      color: #111;
     }
-    .floating-window button { background: none; border: none; font-size: 24px; cursor: pointer; pointer-events: auto; }
+    /* עיצוב כותרת ראשית */
+    h1 {
+      color: #e53935;
+      text-align: center;
+      margin: 0 0 10px 0;
+      font-size: 2.2rem;
+      letter-spacing: 1px;
+    }
+    /* קונטיינר ראשי שמרכז את שתי העמודות */
+    .main-container {
+      margin: 0 auto 0 auto;
+      max-width: 1200px;
+      display: flex; /* שתי עמודות זו לצד זו */
+      gap: 24px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    /* עיצוב כל עמודה (שמאלית/ימנית) */
+    .col {
+      flex: 1 1 0;
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-width: 0;
+    }
+    /* עיצוב כותרות הסקשנים */
+    .section-title {
+      color: #ff9900;
+      font-weight: bold;
+      font-size: 1.1rem;
+      text-align: center;
+      border-bottom: 2px solid #ff9900;
+      margin-bottom: 0;
+      margin-top: 8px;
+      padding-bottom: 2px;
+      letter-spacing: 0.2px;
+      background: #fff;
+    }
+    /* עיצוב כל הטבלאות */
+    .custom-table {
+      width: 100%;
+      border: 1px solid #bdbdbd;
+      border-collapse: collapse;
+      background: #fff;
+      font-size: 1rem;
+    }
+    /* עיצוב תאים בטבלאות */
+    .custom-table th, .custom-table td {
+      border: 1px solid #bdbdbd;
+      padding: 6px 8px;
+      vertical-align: middle;
+    }
+    /* עיצוב כותרות עמודות בטבלאות */
+    .custom-table th {
+      background: #fff;
+      color: #111;
+      text-align: center;
+      font-weight: bold;
+    }
+    /* עיצוב שדות טקסט בטבלאות */
+    .custom-table input[type="text"] {
+      width: 98%;
+      border: 1px solid #ccc;
+      border-radius: 3px;
+      padding: 2px 6px;
+      font-size: 1rem;
+      background: #fafafa;
+      transition: border 0.2s;
+    }
+    /* שינוי צבע גבול של שדה טקסט בפוקוס */
+    .custom-table input[type="text"]:focus {
+      border: 1.5px solid #ff9900;
+      outline: none;
+      background: #fffbe8;
+    }
+    /* עיצוב שדות אופציות */
+    .options-table td {
+      text-align: left;
+    }
+    /* עיצוב תיבות סימון בטבלת אופציות */
+    .options-table input[type="checkbox"] {
+      display: block;
+      margin: 0 auto;
+      transform: scale(1.1);
+    }
+    /* עיצוב שדות טקסט בטבלת אופציות */
+    .options-table input[type="text"] {
+      width: 70px;
+      text-align: center;
+      margin: 0 auto;
+      font-size: 1rem;
+      border: 1px solid #bdbdbd;
+      border-radius: 3px;
+      padding: 2px 4px;
+    }
+    /* עיצוב תווית לשדה לקוח */
+    .form-label {
+      font-weight: bold;
+      font-size: 1.07rem;
+      margin-bottom: 0;
+      color: #222;
+    }
+    /* עיצוב שדה לקוח */
+    .customer-input {
+      border: 2px solid #ff9900;
+      border-radius: 4px;
+      width: 220px;
+      display: inline-block;
+      margin-left: 10px;
+      padding: 2px 8px;
+      font-size: 1rem;
+      background: #fafafa;
+      transition: border 0.2s;
+    }
+    /* שינוי גבול שדה לקוח בפוקוס */
+    .customer-input:focus {
+      border: 2px solid #e53935;
+      outline: none;
+      background: #fffbe8;
+    }
+    /* שורת שדה הלקוח */
+    .customer-row {
+      margin-bottom: 14px;
+      margin-top: 18px;
+      text-align: left;
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    /* עיצוב אזור ההערות */
+    .notes-section {
+      max-width: 1200px;
+      margin: 30px auto 0 auto;
+      padding: 0 10px;
+    }
+    /* עיצוב תווית לאזור ההערות */
+    .notes-section label {
+      font-weight: bold;
+      color: #ff9900;
+      font-size: 1.07rem;
+      margin-bottom: 2px;
+      display: block;
+    }
+    /* עיצוב תיבת טקסט להערות */
+    .notes-section textarea {
+      width: 100%;
+      min-height: 60px;
+      border: 1.5px solid #bdbdbd;
+      border-radius: 4px;
+      padding: 6px 8px;
+      font-size: 1rem;
+      background: #fafafa;
+      resize: vertical;
+      transition: border 0.2s;
+    }
+    /* שינוי גבול תיבת הערות בפוקוס */
+    .notes-section textarea:focus {
+      border: 1.5px solid #ff9900;
+      outline: none;
+      background: #fffbe8;
+    }
+    /* חלון צף עם אייקונים */
+    .floating-window {
+      position: fixed;
+      top: 24px;
+      left: 24px;
+      background: #ffffffee;
+      border: 1.5px solid #ccc;
+      border-radius: 12px;
+      padding: 10px 18px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.13);
+      z-index: 2000;
+      cursor: move;
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      user-select: none;
+    }
+    /* עיצוב כפתורים בחלון הצף */
+    .floating-window button {
+      background: none;
+      border: none;
+      padding: 0;
+      cursor: pointer;
+      pointer-events: auto;
+      transition: transform 0.12s;
+    }
+    /* הגדלת כפתור בהובר */
+    .floating-window button:hover {
+      transform: scale(1.08);
+    }
+    /* עיצוב תמונה של אייקון בחלון הצף */
+    .floating-window img {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: #fff;
+      border: 1.5px solid #ff9900;
+      box-shadow: 0 1px 4px rgba(0,0,0,0.07);
+      object-fit: cover;
+      transition: box-shadow 0.2s;
+    }
+    /* הצללה נוספת לאייקון בהובר */
+    .floating-window img:hover {
+      box-shadow: 0 3px 12px rgba(255,153,0,0.19);
+    }
+    /* רספונסיביות למסכים קטנים */
+    @media (max-width: 900px) {
+      .main-container {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 0 2vw;
+        max-width: 98vw;
+        gap: 0;
+      }
+      .col {
+        min-width: 0;
+        max-width: 100%;
+      }
+      .notes-section, .customer-row {
+        max-width: 98vw;
+      }
+      .floating-window {
+        left: 8px;
+        top: 8px;
+        padding: 6px 8px;
+        gap: 8px;
+      }
+      .floating-window img {
+        width: 36px;
+        height: 36px;
+      }
+    }
+    /* עיצוב הדפסה - הכל נכנס לעמוד אחד לרוחב (landscape) */
+    @media print {
+      @page {
+        size: landscape;
+        margin: 0.5cm;
+      }
+      html, body {
+        background: #fff !important;
+        color: #111 !important;
+        width: 100vw;
+        height: 100vh;
+        font-size: 11px !important;
+        margin: 0;
+        padding: 0;
+        box-shadow: none !important;
+      }
+      h1 {
+        font-size: 1.2rem !important;
+        margin: 0 0 6px 0 !important;
+      }
+      .main-container,
+      .customer-row,
+      .notes-section {
+        max-width: 100vw !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-shadow: none !important;
+        background: #fff !important;
+      }
+      .main-container {
+        gap: 8px !important;
+      }
+      .col {
+        gap: 5px !important;
+      }
+      .section-title {
+        font-size: 0.98rem !important;
+        padding-bottom: 1px !important;
+        margin-top: 4px !important;
+        margin-bottom: 0 !important;
+      }
+      .custom-table,
+      .custom-table th, .custom-table td {
+        font-size: 0.95em !important;
+        padding: 2px 3px !important;
+        border-width: 1px !important;
+      }
+      .custom-table input[type="text"],
+      .options-table input[type="text"] {
+        font-size: 0.95em !important;
+        padding: 1px 2px !important;
+        width: 95% !important;
+      }
+      .notes-section textarea {
+        font-size: 0.95em !important;
+        min-height: 30px !important;
+        padding: 2px 4px !important;
+      }
+      .floating-window {
+        display: none !important; /* לא להדפיס את החלון הצף */
+      }
+    }
   </style>
 </head>
 <body>
-  <h1>Pro32</h1>
-  <!-- החלון הצף -->
+  <!-- חלון צף עם שני אייקונים (PDF וחזרה) -->
   <div class="floating-window" id="floatWin">
-    <button title="חזרה לדף הבית" onclick="window.location.href='index.html'"><img src="https://raw.githubusercontent.com/RL3printer/Matan_EFI/main/icons/backIcon.jpg" alt="Home" width="48"></button>
-    <button title="הצג כ-PDF" onclick="window.print()"><img src="https://raw.githubusercontent.com/RL3printer/Matan_EFI/main/icons/pdficon.png" alt="PDF" width="48"></button>
-
+    <!-- כפתור הדפסה -->
+    <button title="הצג כ-PDF" onclick="window.print()">
+      <img src="https://raw.githubusercontent.com/RL3printer/Matan_EFI/main/icons/pdficon.png" alt="PDF">
+    </button>
+    <!-- כפתור חזרה לדף הבית -->
+    <button title="חזרה לדף הבית" onclick="window.location.href='index.html'">
+      <img src="https://raw.githubusercontent.com/RL3printer/Matan_EFI/main/icons/backIcon.jpg" alt="Home">
+    </button>
   </div>
 
+  <!-- כותרת ראשית -->
+  <h1>STATUS Pro 32</h1>
   <!-- שדה לקוח -->
-  <div class="form-group">
-    <label><strong>Customer name:</strong></label>
-    <input type="text" class="form-control" style="width: 450px; display: inline-block;">
+  <div class="customer-row">
+    <label class="form-label" for="customerName">Customer name:</label>
+    <input type="text" class="customer-input" id="customerName" name="customerName" placeholder="הזן שם לקוח">
   </div>
-
-  <!-- סקשן Configuration -->
-  <div class="form-section">
-    <div class="section-title">Configuration</div>
-    <table class="table table-bordered">
-      <tr><td>Serial Number</td><td><input type="text" class="form-control"></td></tr>
-      <tr><td>Model</td><td><input type="text" class="form-control"></td></tr>
-      <tr><td>White options</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
-      <tr><td>S/W front end</td><td><input type="text" class="form-control"></td></tr>
-    </table>
+  <!-- שתי עמודות של טבלאות -->
+  <div class="main-container">
+    <!-- עמודה שמאלית -->
+    <div class="col">
+      <!-- טבלת קונפיגורציה -->
+      <div>
+        <div class="section-title">Configuration</div>
+        <table class="custom-table">
+          <tr>
+            <td>Serial Number <!-- מספר סידורי --></td>
+            <td><input type="text" placeholder="Enter serial"></td>
+          </tr>
+          <tr>
+            <td>Model <!-- דגם --></td>
+            <td><input type="text" value="PRO 32+"></td>
+          </tr>
+          <tr>
+            <td>White options <!-- אפשרות צבע לבן --></td>
+            <td><input type="checkbox"></td>
+          </tr>
+          <tr>
+            <td>S/W front end <!-- גרסת תוכנה --></td>
+            <td><input type="text"></td>
+          </tr>
+        </table>
+      </div>
+      <!-- טבלת מחשבים ותקעים -->
+      <div>
+        <div class="section-title">Computers & Plugs</div>
+        <table class="custom-table">
+          <tr>
+            <td>S/N Computer <!-- מספר מחשב --></td>
+            <td><input type="text"></td>
+          </tr>
+          <tr>
+            <td>Plug ID <!-- מזהה תקע --></td>
+            <td><input type="text"></td>
+          </tr>
+        </table>
+      </div>
+      <!-- טבלת נתוני FPGA -->
+      <div>
+        <div class="section-title">For NEW data pass options</div>
+        <table class="custom-table">
+          <tr>
+            <td>Video card FPGA (Ferrari) <!-- כרטיס וידאו FPGA --></td>
+            <td><input type="text" value="0x"></td>
+          </tr>
+          <tr>
+            <td>Carriage FPGA (Tarro) <!-- FPGA מנוע --></td>
+            <td><input type="text" value="0x"></td>
+          </tr>
+          <tr>
+            <td>Id Card FPGA (Maxwell) <!-- FPGA מזהה --></td>
+            <td><input type="text" value="0x"></td>
+          </tr>
+          <tr>
+            <td>DP SW Ver <!-- גרסת תוכנה DP --></td>
+            <td><input type="text"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!-- עמודה ימנית -->
+    <div class="col">
+      <!-- טבלת גרסאות BURN -->
+      <div>
+        <div class="section-title">Burn Version</div>
+        <table class="custom-table">
+          <tr>
+            <td>Controller <!-- בקר --></td>
+            <td><input type="text"></td>
+          </tr>
+          <tr>
+            <td>PLC Block <!-- בלוק PLC --></td>
+            <td><input type="text"></td>
+          </tr>
+          <tr>
+            <td>PLC Machine <!-- PLC מכונה --></td>
+            <td><input type="text"></td>
+          </tr>
+        </table>
+      </div>
+      <!-- טבלת אופציות -->
+      <div>
+        <div class="section-title">OPTIONS INCLUDET</div>
+        <table class="custom-table options-table">
+          <tr>
+            <td>BLOCK OUT <!-- חסימת יציאה --></td>
+            <td><input type="checkbox"></td>
+          </tr>
+          <tr>
+            <td>AUTOMATIC BACKLIT FOR PRO 32R+ <!-- תאורה אחורית אוטומטית --></td>
+            <td><input type="checkbox"></td>
+          </tr>
+          <tr>
+            <td>EDGE GUARD <!-- מגן קצה --></td>
+            <td><input type="text" placeholder="№ of set"></td>
+          </tr>
+          <tr>
+            <td>DUAL ROLL 1.6M*2 SPLIT SHAFTS – LOADING FOR PRO 32R+ <!-- גלילים כפולים טעינה --></td>
+            <td><input type="text"></td>
+          </tr>
+          <tr>
+            <td>DUAL ROLL 1.6M*2 SPLIT SHAFTS – COLLECTION FOR PRO 32R+ <!-- גלילים כפולים איסוף --></td>
+            <td><input type="text"></td>
+          </tr>
+          <tr>
+            <td>SLITTER FOR PRO 32R+ <!-- חותך --></td>
+            <td><input type="text"></td>
+          </tr>
+          <tr>
+            <td>H-DETECTOR <!-- גלאי H --></td>
+            <td><input type="checkbox"></td>
+          </tr>
+          <tr>
+            <td>CHILLER <!-- צ'ילר --></td>
+            <td><input type="checkbox"></td>
+          </tr>
+          <tr>
+            <td>ONE SITE REPAIR KIT <!-- ערכת תיקון --></td>
+            <td><input type="checkbox"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
   </div>
-
-  <!-- סקשן Burn Version -->
-  <div class="form-section">
-    <div class="section-title">Burn Version</div>
-    <table class="table table-bordered">
-      <tr><td>Controller</td><td><input type="text" class="form-control"></td></tr>
-      <tr><td>PLC Block</td><td><input type="text" class="form-control"></td></tr>
-      <tr><td>PLC Machine</td><td><input type="text" class="form-control"></td></tr>
-    </table>
+  <!-- אזור להערות חופשיות -->
+  <div class="notes-section">
+    <label for="notes">הערות נוספות:</label>
+    <textarea id="notes" name="notes" placeholder="כתוב כאן הערות או מידע נוסף..."></textarea>
   </div>
-
-  <!-- סקשן Computers & Plugs -->
-  <div class="form-section">
-    <div class="section-title">Computers & Plugs</div>
-    <table class="table table-bordered">
-      <tr><td>Computer</td><td><input type="text" class="form-control"></td></tr>
-      <tr><td>Dog ID</td><td><input type="text" class="form-control"></td></tr>
-    </table>
-  </div>
-
-  <!-- סקשן For NEW data pass options -->
-  <div class="form-section">
-    <div class="section-title">For NEW data pass options</div>
-    <table class="table table-bordered" id="data-pass-table">
-      <tr><td>IO card FPGA (Ferrari)</td><td><input type="text" class="form-control" value="0x" onfocus="this.setSelectionRange(this.value.length, this.value.length)"></td></tr>
-      <tr><td>Carriage FPGA (Tarro)</td><td><input type="text" class="form-control" value="0x" onfocus="this.setSelectionRange(this.value.length, this.value.length)"></td></tr>
-      <tr><td>Id Card FPGA (Maxwell)</td><td><input type="text" class="form-control" value="0x" onfocus="this.setSelectionRange(this.value.length, this.value.length)"></td></tr>
-      <tr><td>DP SW Ver</td><td><input type="text" class="form-control"></td></tr>
-    </table>
-  </div>
-
-  <!-- סקשן OPTIONS INCLUDET -->
-  <div class="form-section">
-    <div class="section-title">OPTIONS INCLUDET</div>
-    <table class="table table-bordered">
-      <tr><td>BLOCK OUT</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
-      <tr><td>AUTOMATIC BACKLIT FOR PRO 32R+</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
-      <tr><td>EDGE GUARD</td><td><input type="text" class="form-control" placeholder="No of set"></td></tr>
-      <tr><td>DUAL ROLL 1.6M*2 SPLIT SHAFTS – LOADING FOR PRO 32R+</td><td><input type="text" class="form-control"></td></tr>
-      <tr><td>DUAL ROLL 1.6M*2 SPLIT SHAFTS – COLLECTION FOR PRO 32R+</td><td><input type="text" class="form-control"></td></tr>
-      <tr><td>SLITTER FOR PRO 32R+</td><td><input type="text" class="form-control"></td></tr>
-      <tr><td>H-DETECTOR</td><td><input type="text" class="form-control"></td></tr>
-      <tr><td>CHILLER</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
-      <tr><td>ONE SITE REPAIR KIT</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
-    </table>
-  </div>
-
-  <!-- סקשן NEW LINE -->
-  <div class="form-section">
-    <div class="section-title">NEW LINE</div>
-    <table class="table table-bordered" id="new-line-table"></table>
-  </div>
-
   <script>
-    // גרירה של החלון הצף
+    // פונקציה לגרירת החלון הצף עם העכבר
     const floatWin = document.getElementById('floatWin');
     let isDragging = false, startX, startY;
     floatWin.addEventListener('mousedown', e => {
-      if (e.target.closest('button')) return;
+      if (e.target.closest('button')) return; // לא לאפשר גרירה כשלוחצים על כפתור
       isDragging = true;
       startX = e.clientX - floatWin.offsetLeft;
       startY = e.clientY - floatWin.offsetTop;
@@ -128,25 +475,6 @@
       floatWin.style.top  = (e.clientY - startY) + 'px';
     });
     document.addEventListener('mouseup', () => { isDragging = false; });
-
-    // פונקציית הוספת שורה חדשה
-    function addRow() {
-      const table = document.getElementById('new-line-table');
-      const newRow = table.insertRow(-1);
-      const cell1 = newRow.insertCell(0);
-      const cell2 = newRow.insertCell(1);
-      cell1.innerHTML = '<input type="text" class="form-control" placeholder="Description">';
-      cell2.innerHTML = '<input type="text" class="form-control" placeholder="Value">';
-    }
-
-    // פונקציית הסרת השורה האחרונה
-    function removeRow() {
-      const table = document.getElementById('new-line-table');
-      const rowCount = table.rows.length;
-      if (rowCount > 0) {
-        table.deleteRow(rowCount - 1);
-      }
-    }
   </script>
 </body>
 </html>
