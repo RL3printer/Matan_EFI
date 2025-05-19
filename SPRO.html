@@ -2,15 +2,15 @@
 <html lang="he" dir="ltr">
 <head>
   <meta charset="UTF-8">
-  <title>Pro 32</title>
+  <title>STATUS Pro 32</title>
   <style>
-    /* עיצוב בסיסי של גוף הדף */
+    /* עיצוב כללי של הדף */
     body {
       background: #fff;
       font-family: Arial, sans-serif;
       color: #111;
     }
-    /* עיצוב כותרת ראשית */
+    /* עיצוב הכותרת הראשית */
     h1 {
       color: #e53935;
       text-align: center;
@@ -27,7 +27,7 @@
       justify-content: center;
       align-items: flex-start;
     }
-    /* עיצוב כל עמודה (שמאלית/ימנית) */
+    /* כל עמודה (שמאלית/ימנית) */
     .col {
       flex: 1 1 0;
       display: flex;
@@ -35,7 +35,7 @@
       gap: 14px;
       min-width: 0;
     }
-    /* עיצוב כותרות הסקשנים */
+    /* כותרות סקשנים */
     .section-title {
       color: #ff9900;
       font-weight: bold;
@@ -48,7 +48,7 @@
       letter-spacing: 0.2px;
       background: #fff;
     }
-    /* עיצוב כל הטבלאות */
+    /* עיצוב טבלאות */
     .custom-table {
       width: 100%;
       border: 1px solid #bdbdbd;
@@ -62,14 +62,14 @@
       padding: 6px 8px;
       vertical-align: middle;
     }
-    /* עיצוב כותרות עמודות בטבלאות */
+    /* כותרות עמודות בטבלאות */
     .custom-table th {
       background: #fff;
       color: #111;
       text-align: center;
       font-weight: bold;
     }
-    /* עיצוב שדות טקסט בטבלאות */
+    /* שדות טקסט בטבלאות */
     .custom-table input[type="text"] {
       width: 98%;
       border: 1px solid #ccc;
@@ -79,17 +79,17 @@
       background: #fafafa;
       transition: border 0.2s;
     }
-    /* שינוי צבע גבול של שדה טקסט בפוקוס */
+    /* שינוי גבול שדה טקסט בפוקוס */
     .custom-table input[type="text"]:focus {
       border: 1.5px solid #ff9900;
       outline: none;
       background: #fffbe8;
     }
-    /* עיצוב שדות אופציות */
+    /* עיצוב תאי אופציות */
     .options-table td {
       text-align: left;
     }
-    /* עיצוב תיבות סימון בטבלת אופציות */
+    /* עיצוב תיבות סימון */
     .options-table input[type="checkbox"] {
       display: block;
       margin: 0 auto;
@@ -105,14 +105,14 @@
       border-radius: 3px;
       padding: 2px 4px;
     }
-    /* עיצוב תווית לשדה לקוח */
+    /* תווית לשדה לקוח */
     .form-label {
       font-weight: bold;
       font-size: 1.07rem;
       margin-bottom: 0;
       color: #222;
     }
-    /* עיצוב שדה לקוח */
+    /* שדה לקוח */
     .customer-input {
       border: 2px solid #ff9900;
       border-radius: 4px;
@@ -139,13 +139,12 @@
       margin-left: auto;
       margin-right: auto;
     }
-    /* עיצוב אזור ההערות */
+    /* אזור ההערות */
     .notes-section {
       max-width: 1200px;
       margin: 30px auto 0 auto;
       padding: 0 10px;
     }
-    /* עיצוב תווית לאזור ההערות */
     .notes-section label {
       font-weight: bold;
       color: #ff9900;
@@ -153,7 +152,6 @@
       margin-bottom: 2px;
       display: block;
     }
-    /* עיצוב תיבת טקסט להערות */
     .notes-section textarea {
       width: 100%;
       min-height: 60px;
@@ -165,7 +163,6 @@
       resize: vertical;
       transition: border 0.2s;
     }
-    /* שינוי גבול תיבת הערות בפוקוס */
     .notes-section textarea:focus {
       border: 1.5px solid #ff9900;
       outline: none;
@@ -188,7 +185,6 @@
       align-items: center;
       user-select: none;
     }
-    /* עיצוב כפתורים בחלון הצף */
     .floating-window button {
       background: none;
       border: none;
@@ -197,11 +193,9 @@
       pointer-events: auto;
       transition: transform 0.12s;
     }
-    /* הגדלת כפתור בהובר */
     .floating-window button:hover {
       transform: scale(1.08);
     }
-    /* עיצוב תמונה של אייקון בחלון הצף */
     .floating-window img {
       width: 44px;
       height: 44px;
@@ -212,7 +206,6 @@
       object-fit: cover;
       transition: box-shadow 0.2s;
     }
-    /* הצללה נוספת לאייקון בהובר */
     .floating-window img:hover {
       box-shadow: 0 3px 12px rgba(255,153,0,0.19);
     }
@@ -464,7 +457,8 @@
     const floatWin = document.getElementById('floatWin');
     let isDragging = false, startX, startY;
     floatWin.addEventListener('mousedown', e => {
-      if (e.target.closest('button')) return; // לא לאפשר גרירה כשלוחצים על כפתור
+      // לא לגרור אם לוחצים על כפתור או תמונה (כדי לא להפריע ללחיצה)
+      if (e.target.tagName === 'BUTTON' || e.target.tagName === 'IMG') return;
       isDragging = true;
       startX = e.clientX - floatWin.offsetLeft;
       startY = e.clientY - floatWin.offsetTop;
