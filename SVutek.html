@@ -1,101 +1,216 @@
 <!DOCTYPE html>
-<html lang="he" dir="ltr">
+<html lang="he">
 <head>
-  <meta charset="UTF-8"> <!-- קידוד UTF-8 לתמיכה בעברית -->
-  <title>Pro32 Status</title> <!-- כותרת חלון הדפדפן -->
-  <!-- טעינת Bootstrap לעיצוב מהיר של טבלאות ושדות קלט -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <meta charset="UTF-8">
+  <title>STATUS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
-    /* סגנון כללי: הסרת מרווחים ברירת מחדל של הדפדפן ורקע אפור קל */
-    html, body { margin: 0; padding: 0; background: #f5f5f5; }
-    /* מיכל מרכזי לבן עם צל ומסגרת, ריווח פנימי */
-    .page-wrapper { max-width: 1200px; margin: 40px auto; background: #fff; padding: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-    /* כותרת גדולה במרכז בצבע אדום */
-    h1 { color: red; text-align: center; margin-bottom: 20px; }
-    /* סקציה: גבול כהה, ריווח פנימי ושוליים תחתונים */
-    .form-section { border: 1px solid #333; padding: 10px; margin-bottom: 20px; }
-    /* כותרת פנימית בצבע כתום כהה, עיבוי ומרכז */
-    .section-title { color: darkorange; font-weight: bold; margin-bottom: 5px; text-align: center; }
-    /* סגנון לטבלאות עם גבול חזק */
-    .table-bordered td, .table-bordered th { border: 1px solid #333 !important; }
-    /* יישור תוכן בתא עבור checkbox */
-    .checkbox-cell { text-align: center; }
-    /* חלון צף: מיקום קבוע, רקע חצי שקוף, צל, פינות מעוגלות וגרירה */
-    .floating-window {
-      position: fixed; top: 20px; left: 20px;
-      background: rgba(255,255,255,0.9);
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      padding: 8px;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
-      z-index: 2000;
-      user-select: none;
-      cursor: move;
+    body {
+      background: #fff;
+      font-family: Arial, sans-serif;
+      color: #111;
+      margin: 0;
+      padding: 0;
+    }
+    h1 {
+      color: #e53935;
+      text-align: center;
+      margin: 20px 0 10px 0;
+      font-size: 2rem;
+      letter-spacing: 1px;
+    }
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    .col {
+      flex: 1 1 0;
       display: flex;
       flex-direction: column;
       gap: 8px;
+      min-width: 0;
     }
-    /* כפתורים בחלון הצף ללא גבולות ורקע */
-    .floating-window button { background: none; border: none; cursor: pointer; font-size: 20px; }
+    .customer-row {
+      max-width: 1200px;
+      margin: 0 auto 12px auto;
+      font-size: 1.11rem;
+      font-weight: bold;
+      text-align: left;
+    }
+    .customer-row label {
+      margin-right: 8px;
+      color: #006699;
+    }
+    .customer-input {
+      border: 2px solid #ff9900;
+      border-radius: 4px;
+      width: 220px;
+      display: inline-block;
+      margin-left: 10px;
+      padding: 2px 8px;
+      font-size: 1rem;
+      background: #fafafa;
+      transition: border 0.2s;
+      vertical-align: middle;
+    }
+    .customer-input:focus {
+      border: 2px solid #e53935;
+      outline: none;
+      background: #fffbe8;
+    }
+    .form-section {
+      border: 1px solid #bbb;
+      border-radius: 2px;
+      background: #fff;
+      margin-bottom: 0;
+      overflow: hidden;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    }
+    .section-title {
+      color: #ff6600;
+      font-weight: bold;
+      font-size: 1.07rem;
+      text-align: center;
+      border-bottom: 2px solid #ff6600;
+      background: #fff;
+      margin: 0;
+      padding: 4px 0 2px 0;
+      letter-spacing: 0.5px;
+    }
+    .custom-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fff;
+      font-size: 1em;
+    }
+    .custom-table th,
+    .custom-table td {
+      border: 1px solid #bbb;
+      padding: 3px 7px;
+      color: #222;
+      font-family: Arial, sans-serif;
+      font-size: 1em;
+      vertical-align: middle;
+      text-align: left;
+      background: #fff;
+      height: 28px;
+    }
+    .custom-table th.section-title {
+      color: #ff6600;
+      font-weight: bold;
+      text-align: center;
+      font-size: 1.07em;
+      border-bottom: 2px solid #ff6600;
+      background: #fff;
+      letter-spacing: 1px;
+      padding: 4px 0 2px 0;
+    }
+    .custom-table input[type="text"], .custom-table select {
+      width: 98%;
+      font-size: 1em;
+      border: 1px solid #bbb;
+      border-radius: 2px;
+      padding: 2px 2px;
+      background: #fff;
+      box-sizing: border-box;
+    }
+    .custom-table input[type="checkbox"] {
+      margin: 0 0 0 8px;
+      vertical-align: middle;
+      width: 16px;
+      height: 16px;
+      accent-color: #ff6600;
+    }
+    .custom-table .airshaft-title {
+      font-weight: bold;
+      color: #222;
+      vertical-align: middle;
+      background: #fff;
+      text-align: left;
+      min-width: 110px;
+    }
+    .custom-table .airshaft-cell {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    .custom-table .airshaft-cell select {
+      width: 60px;
+      margin-left: 8px;
+      display: inline-block;
+    }
+    .custom-table .airshaft-cell input[type="checkbox"] {
+      margin-left: 8px;
+      margin-right: 0;
+      float: right;
+    }
+    /* רספונסיביות */
+    @media (max-width: 900px) {
+      .main-container {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 8px 2vw;
+        max-width: 99vw;
+        gap: 0;
+      }
+      .col {
+        min-width: 0;
+        max-width: 100%;
+      }
+      .customer-row {
+        max-width: 99vw;
+      }
+    }
+    @media print {
+      @page { size: landscape; margin: 0.5cm; }
+      html, body { background: #fff !important; color: #111 !important; }
+      .main-container, .customer-row { max-width: 100vw !important; margin: 0 !important; padding: 0 !important; box-shadow: none !important; background: #fff !important;}
+      h1 { font-size: 1.2rem !important; margin-bottom: 8px !important; }
+      .custom-table, .custom-table th, .custom-table td { font-size: 0.97em !important; padding: 2px 4px !important; }
+      input, select { font-size: 0.97em !important; }
+    }
   </style>
 </head>
 <body>
-  <!-- מיכל ראשי למרכז העמוד -->
-  <div class="page-wrapper">
-    <!-- כותרת דף -->
-    <h1>STATUS</h1>
+  <!-- כותרת ראשית -->
+  <h1>STATUS</h1>
+  <!-- שדה לקוח -->
+  <div class="customer-row">
+    <label for="customerName">Customer name:</label>
+    <input type="text" class="customer-input" id="customerName" name="customerName" placeholder="">
+  </div>
 
-    <!-- חלון צף עם פעולות מהירות -->
-    <div class="floating-window" id="floatWin">
-      <!-- כפתור בית -->
-      <button title="חזרה לדף הבית" onclick="window.location.href='index.html'"><img src="https://raw.githubusercontent.com/RL3printer/Matan_EFI/main/root/icons/backIcon.jpg" alt="Home" width="24"></button>
-      <!-- כפתור הדפסה -->
-      <button title="הדפס PDF" onclick="window.print()"><img src="icons/pdf.png" width="24" alt="PDF"></button>
-      <!-- כפתור הוספת שורה -->
-      <button title="הוסף שורה" onclick="addRow()"><img src="icons/add.png" width="24" alt="Add"></button>
-      <!-- כפתור הסרת שורה -->
-      <button title="הסר שורה" onclick="removeRow()"><img src="icons/remove.png" width="24" alt="Remove"></button>
-    </div>
-
-    <!-- מבנה גריד של Bootstrap: container ו-row למרכז ומרווח -->
-    <div class="container">
-      <div class="row justify-content-center">
-        <!-- עמודה שמאלית (50% רוחב ב-md ומעלה) -->
-        <div class="col-md-5">
-          <!-- סקשן שם הלקוח -->
-          <div class="form-section">
-            <label><strong>Customer name:</strong></label>
-            <input type="text" class="form-control" placeholder="Customer name">
-          </div>
-
-          <!-- סקשן Configuration -->
-          <div class="form-section">
-            <div class="section-title">Configuration</div>
-            <table class="table table-bordered w-100">
-              <!-- שורה: מספר סידורי -->
-              <tr>
-                <td>Serial Number</td>
-                <td><input class="form-control" placeholder="s/n"></td>
-              </tr>
-              <!-- שורה: בחירת שם מדפסת -->
-              <tr>
-                <td>Name</td>
-                <td>
-                  <select class="form-control">
-                    <option></option>
-                    <option>Vutek 5r+</option>
-                    <option>Vutek 3r+</option>
-                    <option>Vutek D 5r</option>
-                    <option>Vutek D 3r</option>
-                    <option>Vutek Q 5r</option>
-                    <option>Vutek Q 3r</option>
-                    <option>Matan 5</option>
-                    <option>Matan 3</option>
-                  </select>
-                </td>
-              </tr>
-              <!-- שורה: סוג הדפסה בריבוי select -->
-              <tr>
+  <!-- שתי עמודות של טפסים -->
+  <div class="main-container">
+    <!-- עמודה שמאלית -->
+    <div class="col">
+      <div class="form-section">
+        <div class="section-title">Configuration</div>
+        <table class="custom-table">
+          <tr>
+            <td>Serial Number</td>
+            <td><input type="text" placeholder="s/n"></td>
+          </tr>
+          <tr>
+            <td>Name</td>
+            <td>
+              <select>
+                <option></option>
+                <option>Vutek 5r+</option>
+                <option>Vutek 3r+</option>
+                <option>Vutek D 5r</option>
+                <option>Vutek D 3r</option>
+                <option>Vutek Q 5r</option>
+                <option>Vutek Q 3r</option>
+                <option>Matan 5</option>
+                <option>Matan 3</option>
+              </select>
+            </td>
+          </tr>
+           <tr>
                 <td>Type</td>
                 <td>
                   <!-- קווים לסוג צבעי הדפסה -->
@@ -110,109 +225,207 @@
                   <select class="form-control"><option></option><option>Varnish</option></select>
                 </td>
               </tr>
-              <!-- שורה: ממשק תוכנה -->
-              <tr>
-                <td>S/W front end</td>
-                <td><input class="form-control"></td>
-              </tr>
-            </table>
-          </div>
-
-          <!-- סקשן Burn Version -->
-          <div class="form-section">
-            <div class="section-title">Burn Version</div>
-            <table class="table table-bordered w-100">
-              <tr><td>Controller</td><td><input class="form-control"></td></tr>
-              <tr><td>PLC/OFEK Block</td><td><input class="form-control"></td></tr>
-              <tr><td>PLC/OFEK Machine</td><td><input class="form-control"></td></tr>
-            </table>
-          </div>
-        </div>
-
-        <!-- עמודה ימנית נגדית -->
-        <div class="col-md-5">
-          <!-- סקשן OPTIONS INCLUDET -->
-          <div class="form-section">
-            <div class="section-title">OPTIONS INCLUDET</div>
-            <table class="table table-bordered w-100">
-              <!-- שורות עבור כל אופציה -->
-              <tr><td>MIST SEAL</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
-
-               <tr>
-                <td>INK INCLUDET</td>
-                <td>
-                  <select class="form-control">
-                    <option></option>
-                    <option>Without</option>
-                    <option>CMYK</option>
-                    <option>CMYK+Lt</option>
-                    <option>CMYK+W</option>
-                    <option>CMYK+Lt+W</option>
-                   
-                  </select>
-               </td>
-              </tr>
-            
-               <tr><td>MIST COLLECTOR</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
- <tr>
-                <td>LEDS</td>
-                <td>
-                  <select class="form-control">
-                    <option></option>
-                    <option>Long</option>
-                    <option>Short</option>            
-                  </select>
-               </td>
-              </tr>          
-              <tr><td>X MOTOR SUPPORT</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
-              <tr><td>MEDIA SHAFT 5.20M</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
-              <tr><td>PHOTO INTERRUPTER</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
-              <tr><td>PULS</td><td><input class="form-control" value="Wave-DRP2-T2-v2_2"></td></tr>
-              <tr><td>CUTTER</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
-              <tr><td>AIR SHAFT FRONT</td><td><select class="form-control"><option>5.20M</option><option>3.20M</option><option>1.60M</option></select></td></tr>
-              <tr><td>AIR SHAFT REAR</td><td><select class="form-control"><option>5.20M</option><option>3.20M</option><option>1.60M</option></select></td></tr>
-              <tr><td>BLOCK OUT</td><td class="checkbox-cell"><input type="checkbox"></td></tr>
-              <!-- המשך שורות בהתאם -->
-            </table>
-          </div>
-        </div>
+          <tr>
+            <td>S/W front end</td>
+            <td><input type="text"></td>
+          </tr>
+        </table>
+      </div>
+      <div class="form-section">
+        <div class="section-title">Burn Version</div>
+        <table class="custom-table">
+          <tr>
+            <td>Controller</td>
+            <td><input type="text"></td>
+          </tr>
+          <tr>
+            <td>PLC/OFEK Block</td>
+            <td><input type="text"></td>
+          </tr>
+          <tr>
+            <td>PLC/OFEK Machine</td>
+            <td><input type="text"></td>
+          </tr>
+        </table>
+      </div>
+      <div class="form-section">
+        <div class="section-title">Computers & Plugs</div>
+        <table class="custom-table">
+          <tr>
+            <td>S/N Computer</td>
+            <td><input type="text"></td>
+          </tr>
+          <tr>
+            <td>Plug ID</td>
+            <td><input type="text"></td>
+          </tr>
+          <tr>
+            <td>S/N Caldera</td>
+            <td><input type="text"></td>
+          </tr>
+          <tr>
+            <td>Plug Caldera</td>
+            <td><input type="text"></td>
+          </tr>
+        </table>
+      </div>
+      <div class="form-section">
+        <div class="section-title">For NEW data pass options</div>
+        <table class="custom-table">
+          <tr>
+            <td>Video card FPGA</td>
+            <td><input type="text" value="0x"></td>
+          </tr>
+          <tr>
+            <td>Carriage FPGA (Tarro)</td>
+            <td><input type="text" value="0x"></td>
+          </tr>
+          <tr>
+            <td>Id Card FPGA (Maxwell)</td>
+            <td><input type="text" value="0x"></td>
+          </tr>
+          <tr>
+            <td>DP SW Ver</td>
+            <td><input type="text"></td>
+          </tr>
+        </table>
+      </div>
+      <div class="form-section">
+        <div class="section-title">For OLD data pass options</div>
+        <table class="custom-table">
+          <tr>
+            <td>PCI uC</td>
+            <td><input type="text"></td>
+          </tr>
+          <tr>
+            <td>PCI fpga</td>
+            <td><input type="text"></td>
+          </tr>
+          <tr>
+            <td>BCC uC</td>
+            <td><input type="text"></td>
+          </tr>
+          <tr>
+            <td>BCC fpga</td>
+            <td><input type="text"></td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <!-- עמודה ימנית -->
+    <div class="col">
+      <div class="form-section">
+        <div class="section-title">OPTIONS INCLUDET</div>
+        <table class="custom-table">
+          <tr><td>MIST SEAL</td><td><input type="checkbox"></td></tr>
+          <tr>
+            <td>INK INCLUDET</td>
+            <td>
+              <select>
+                <option></option>
+                <option>Without</option>
+                <option>CMYK</option>
+                <option>CMYK+Lt</option>
+                <option>CMYK+W</option>
+                <option>CMYK+Lt+W</option>
+              </select>
+            </td>
+          </tr>
+          <tr><td>MIST COLLECTOR</td><td><input type="checkbox"></td></tr>
+          <tr>
+            <td>LEDS</td>
+            <td>
+              <select>
+                <option></option>
+                <option>Long</option>
+                <option>Short</option>
+              </select>
+            </td>
+          </tr>
+          <tr><td>X MOTOR SUPPORT</td><td><input type="checkbox"></td></tr>
+          <tr><td>MEDIA SHAFT 5.20M</td><td><input type="checkbox"></td></tr>
+          <tr><td>PHOTO INTERRUPTER</td><td><input type="checkbox"></td></tr>
+          <tr><td>PULS</td><td><input type="text" value="Wave-DRP2-T2-v2_2"></td></tr>
+          <tr><td>CUTTER</td><td><input type="checkbox"></td></tr>
+          <!-- שורת AIR SHAFT FRONT -->
+          <tr>
+            <td class="airshaft-title" rowspan="3">AIR SHAFT FRONT</td>
+            <td class="airshaft-cell">5.20M <input type="checkbox"></td>
+          </tr>
+          <tr>
+            <td class="airshaft-cell">3.20M <input type="checkbox"></td>
+          </tr>
+          <tr>
+            <td class="airshaft-cell">1.60M
+              <select>
+                <option></option>
+                <option>x1</option>
+                <option>x2</option>
+                <option>x3</option>
+              </select>
+            </td>
+          </tr>
+          <!-- שורת AIR SHAFT REAR -->
+          <tr>
+            <td class="airshaft-title" rowspan="3">AIR SHAFT REAR</td>
+            <td class="airshaft-cell">5.20M <input type="checkbox"></td>
+          </tr>
+          <tr>
+            <td class="airshaft-cell">3.20M <input type="checkbox"></td>
+          </tr>
+          <tr>
+            <td class="airshaft-cell">1.60M
+              <select>
+                <option></option>
+                <option>x1</option>
+                <option>x2</option>
+                <option>x3</option>
+              </select>
+            </td>
+          </tr>
+          <tr><td>BLOCK OUT</td><td><input type="checkbox"></td></tr>
+          <tr><td>BACK LIT</td><td><input type="checkbox"></td></tr>
+          <tr><td>CAMERA</td><td><input type="checkbox"></td></tr>
+          <tr><td>ID BACK PRINTER</td><td><input type="checkbox"></td></tr>
+          <tr><td>H DETECTOR</td><td><input type="checkbox"></td></tr>
+          <tr>
+		  <td>SHEET COLLECTOR</td>
+            <td>
+              <select>
+                <option></option>
+                <option>x1</option>
+                <option>x2</option>
+                <option>x3</optin>
+              </select>
+            </td>
+		  </tr>
+          <tr><td>ONE SITE REPAIR KIT</td><td><input type="checkbox"></td></tr>
+          <tr><td>INSTALLATION KIT</td><td><input type="checkbox"></td></tr>
+          <tr><td>SLITTER</td><td><input type="checkbox"></td></tr>
+          <tr><td>MULTI ROLL KIT</td><td><input type="checkbox"></td></tr>
+          <tr><td>BALANCE T</td><td><input type="checkbox"></td></tr>
+          <tr><td>BALANCE Y</td><td><input type="checkbox"></td></tr>
+          <tr><td>SPREADERS KIT</td><td><input type="checkbox"></td></tr>
+		  <tr>
+		  <td>WASTE</td>
+            <td>
+              <select>
+                <option></option>
+                <option>Big</option>
+                <option>Small</option>
+               
+              </select>
+            </td>
+		  </tr>  
+          <tr><td>CHILLER</td><td><input type="checkbox"></td></tr>
+          <tr><td>ORANGE CABLES 110V</td><td><input type="checkbox"></td></tr>
+          <tr><td>ROLL & TYPE</td><td><input type="checkbox"></td></tr>
+          <tr><td>INSPECTION KIT</td><td><input type="checkbox"></td></tr>
+          <tr><td>SCANNER</td><td><input type="checkbox"></td></tr>
+          <tr><td>EDGE MEDIA GUARD</td><td><input type="checkbox"></td></tr>
+        </table>
       </div>
     </div>
   </div>
-
-  <!-- סקריפט לגרירת החלון הצף והוספת/הסרת שורות -->
-  <script>
-    const floatWin = document.getElementById('floatWin');
-    let drag = false, sX, sY;
-    // התחלת גרירה
-    floatWin.addEventListener('mousedown', e => {
-      if (!e.target.closest('button')) {
-        drag = true;
-        sX = e.clientX - floatWin.offsetLeft;
-        sY = e.clientY - floatWin.offsetTop;
-      }
-    });
-    // הזזת החלון
-    document.addEventListener('mousemove', e => {
-      if (drag) {
-        floatWin.style.left = e.clientX - sX + 'px';
-        floatWin.style.top = e.clientY - sY + 'px';
-      }
-    });
-    // סיום גרירה
-    document.addEventListener('mouseup', () => { drag = false; });
-    // פונקציה להוספת שורת NEW LINE
-    function addRow() {
-      const tbl = document.getElementById('new-line-table');
-      const r = tbl.insertRow();
-      r.insertCell().innerHTML = '<input class="form-control" placeholder="Description">';
-      r.insertCell().innerHTML = '<input class="form-control" placeholder="Value">';
-    }
-    // פונקציה להסרת השורה האחרונה
-    function removeRow() {
-      const tbl = document.getElementById('new-line-table');
-      if (tbl.rows.length) tbl.deleteRow(-1);
-    }
-  </script>
 </body>
 </html>
