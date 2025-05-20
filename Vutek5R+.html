@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="he">
 <head>
@@ -5,14 +6,12 @@
     <title>Vutek 5r+ - Box Status Integration</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-        /* עיצוב כללי */
         body {
             font-family: Arial, sans-serif;
             background: #fff;
             margin: 0;
             padding: 0;
         }
-
         h1 {
             text-align: center;
             color: #176c4c;
@@ -20,8 +19,6 @@
             font-size: 1.28em;
             letter-spacing: 1px;
         }
-
-        /* עיצוב עוטף טבלאות */
         .box-table-wrapper {
             position: relative;
             width: 650px;
@@ -29,42 +26,39 @@
             margin: 18px auto 0 auto;
             page-break-inside: avoid;
         }
-
-        /* עיצוב הטבלה */
         .box-table {
             width: 100%;
+            table-layout: fixed;
             border-collapse: collapse;
             background: #fff;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             font-size: 0.93em;
         }
-
         .box-table th, .box-table td {
             border: 1px solid #176c4c;
             padding: 4px;
             text-align: center;
             color: #176c4c;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
         }
-
         .box-table th {
             background: #e6f2ef;
             font-weight: bold;
         }
-
         .box-table th.box-header {
             background: #e6f2ef;
             color: #176c4c;
             width: 13%;
             padding: 0;
+            white-space: nowrap;
         }
-
         input[type="checkbox"] {
             width: 16px;
             height: 16px;
             cursor: pointer;
         }
-
-        /* כפתורי מחיקה/שחזור טבלה */
         .icon-btn {
             position: absolute;
             top: 4px;
@@ -75,33 +69,26 @@
             z-index: 10;
             padding: 0;
         }
-
         .icon-btn img {
             width: 22px;
             height: 22px;
             display: block;
         }
-
-        /* טבלה שמוסתרת */
         .dimmed {
             opacity: 0.34;
             pointer-events: none;
             filter: grayscale(0.7) blur(1px);
             user-select: none;
         }
-
         .dimmed * {
             pointer-events: none !important;
             user-select: none !important;
         }
-
         .box-table-wrapper.dimmed .undoBtn {
             pointer-events: auto !important;
             filter: none !important;
             opacity: 1 !important;
         }
-
-        /* כפתורים צפים */
         .floating-window {
             position: fixed;
             top: 18px;
@@ -118,7 +105,6 @@
             padding: 12px 10px;
             user-select: none;
         }
-
         .floating-window button {
             background: none;
             border: none;
@@ -127,12 +113,10 @@
             transition: transform 0.13s;
             outline: none;
         }
-
         .floating-window button:focus,
         .floating-window button:hover {
             transform: scale(1.08);
         }
-
         .floating-window img {
             width: 32px;
             height: 32px;
@@ -141,7 +125,6 @@
             border: 2px solid #ff9900;
             box-shadow: 0 2px 8px rgba(0,0,0,0.10);
         }
-
         .floating-window .add-btn {
             width: 34px;
             height: 34px;
@@ -155,52 +138,39 @@
             align-items: center;
             justify-content: center;
         }
-
         .floating-window .add-btn:hover {
             background: #176c4c;
         }
-
-        /* עיצוב שורות מוסתרות */
         .row-dimmed td, .row-dimmed input {
             color: #aaa !important;
             background: #f5f5f5 !important;
         }
-
         .row-dimmed input {
             pointer-events: none;
         }
-
         .row-dimmed .del-row-btn {
             display: none;
         }
-
         .row-dimmed .undo-row-btn {
             display: inline;
         }
-
         .undo-row-btn {
             display: none;
         }
-
-        /* עיצוב להדפסה */
         @media print {
             .floating-window, .icon-btn {
                 display: none !important;
             }
-
             .box-table-wrapper.dimmed {
                 display: none !important;
             }
-
             .box-table {
                 box-shadow: none !important;
             }
-
             .box-table th, .box-table td {
                 font-size: 0.93em !important;
                 padding: 2px 2px !important;
             }
-
             @page {
                 size: A4 portrait;
                 margin: 8mm;
@@ -218,22 +188,22 @@
         <button title="חזרה לדף הבית" onclick="window.location.href='index.html'">
             <img src="https://raw.githubusercontent.com/RL3printer/Matan_EFI/main/icons/backIcon.jpg" alt="Home">
         </button>
-        <button class="add-btn" title="הוסף טבלה ריקה" onclick="alert('הוספת טבלאות חסומה כאן')">+</button>
+        <button class="add-btn" title="הוסף טבלה ריקה" onclick="addEmptyTable()">+</button>
     </div>
 
     <h1>Vutek 5r+ - Box Status Integration</h1>
 
     <!-- טבלה ראשונה - BOX 1 -->
-    <div class="box-table-wrapper" id="box1">
-        <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable('box1')">
+    <div class="box-table-wrapper">
+        <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable(this)">
             <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete">
         </button>
-        <button class="icon-btn undoBtn" title="החזר טבלה" style="display:none;" onclick="restoreTable('box1')">
+        <button class="icon-btn undoBtn" title="החזר טבלה" style="display:none;" onclick="restoreTable(this)">
             <img src="https://cdn-icons-png.flaticon.com/512/109/109618.png" alt="Undo">
         </button>
         <table class="box-table">
             <tr>
-                <th class="box-header" rowspan="4">BOX<br>1/41</th>
+                <th class="box-header" rowspan="4">BOX<br><span class="box-current"></span> מתוך <span class="box-total"></span></th>
                 <th>DESCRIPTION</th>
                 <th>P/N</th>
                 <th>QUANTITY</th>
@@ -260,24 +230,60 @@
         </table>
     </div>
 
-    <!-- טבלה אחרונה - BOX 42 עם מחיקת שורות -->
-    <div class="box-table-wrapper" id="box42">
-        <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable('box42')">
+    <!-- טבלה שניה - BOX 2 -->
+    <div class="box-table-wrapper">
+        <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable(this)">
             <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete">
         </button>
-        <button class="icon-btn undoBtn" title="החזר טבלה" style="display:none;" onclick="restoreTable('box42')">
+        <button class="icon-btn undoBtn" title="החזר טבלה" style="display:none;" onclick="restoreTable(this)">
             <img src="https://cdn-icons-png.flaticon.com/512/109/109618.png" alt="Undo">
         </button>
         <table class="box-table">
             <tr>
-                <th class="box-header" rowspan="10">BOX<br>42/42</th>
+                <th class="box-header" rowspan="4">BOX<br><span class="box-current"></span> מתוך <span class="box-total"></span></th>
+                <th>DESCRIPTION</th>
+                <th>P/N</th>
+                <th>QUANTITY</th>
+                <th>CHECK LIST</th>
+            </tr>
+            <tr>
+                <td>feeder limiter arm assy</td>
+                <td>11101907</td>
+                <td>2</td>
+                <td><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>COLLECTOR LEFT LIMITER A.S. VERSION</td>
+                <td>11101945</td>
+                <td>1</td>
+                <td><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>BALL LOCK PINS D=12 L=70</td>
+                <td>11101944</td>
+                <td>1</td>
+                <td><input type="checkbox"></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- טבלה אחרונה - BOX 42 עם מחיקת שורות -->
+    <div class="box-table-wrapper">
+        <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable(this)">
+            <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete">
+        </button>
+        <button class="icon-btn undoBtn" title="החזר טבלה" style="display:none;" onclick="restoreTable(this)">
+            <img src="https://cdn-icons-png.flaticon.com/512/109/109618.png" alt="Undo">
+        </button>
+        <table class="box-table">
+            <tr>
+                <th class="box-header" rowspan="10">BOX<br><span class="box-current"></span> מתוך <span class="box-total"></span></th>
                 <th>DESCRIPTION</th>
                 <th>P/N</th>
                 <th>QUANTITY</th>
                 <th>CHECK LIST</th>
                 <th></th>
             </tr>
-            <!-- כל שורה ניתנת להסתרה או שחזור -->
             <tr>
                 <td>INK EFI MATAN SUPERRANGE XF V3 CYAN</td>
                 <td>45190876</td>
@@ -288,38 +294,108 @@
                     <button class="undo-row-btn" onclick="restoreRow(this)">↩</button>
                 </td>
             </tr>
-            <!-- אפשר להוסיף עוד שורות באותו פורמט... -->
+            <!-- אפשר להוסיף עוד שורות באותו פורמט -->
         </table>
     </div>
 
     <script>
+        // עדכון מספור BOX רק לטבלאות גלויות
+        function updateBoxNumbers() {
+            const visibleWrappers = Array.from(document.querySelectorAll('.box-table-wrapper:not(.dimmed)'));
+            visibleWrappers.forEach((wrapper, index) => {
+                const currentSpan = wrapper.querySelector('.box-current');
+                const totalSpan = wrapper.querySelector('.box-total');
+                if(currentSpan) currentSpan.textContent = index + 1;
+                if(totalSpan) totalSpan.textContent = visibleWrappers.length;
+            });
+        }
+
+        // הוספת טבלה חדשה
+        function addEmptyTable() {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'box-table-wrapper';
+            wrapper.innerHTML = `
+                <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable(this)">
+                    <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete">
+                </button>
+                <button class="icon-btn undoBtn" title="החזר טבלה" style="display:none;" onclick="restoreTable(this)">
+                    <img src="https://cdn-icons-png.flaticon.com/512/109/109618.png" alt="Undo">
+                </button>
+                <table class="box-table">
+                    <tr>
+                        <th class="box-header" rowspan="2">BOX<br><span class="box-current"></span> מתוך <span class="box-total"></span></th>
+                        <th>DESCRIPTION</th>
+                        <th>P/N</th>
+                        <th>QUANTITY</th>
+                        <th>CHECK LIST</th>
+                    </tr>
+                    <tr>
+                        <td><input type="text" placeholder="תיאור"></td>
+                        <td><input type="text" placeholder="מק״ט"></td>
+                        <td><input type="number" placeholder="כמות"></td>
+                        <td><input type="checkbox"></td>
+                    </tr>
+                </table>
+            `;
+            document.body.appendChild(wrapper);
+            updateBoxNumbers();
+        }
+
+        // הוספת שורה חדשה לטבלה קיימת
+        function addRowToTable(btn) {
+            const wrapper = btn.closest('.box-table-wrapper');
+            const table = wrapper.querySelector('.box-table');
+            const tbody = table.querySelector('tbody') || table;
+            const newRow = document.createElement('tr');
+            newRow.innerHTML = `
+                <td><input type="text" placeholder="תיאור"></td>
+                <td><input type="text" placeholder="מק״ט"></td>
+                <td><input type="number" placeholder="כמות"></td>
+                <td><input type="checkbox"></td>
+                <td>
+                    <button class="del-row-btn" onclick="hideRow(this)">✖</button>
+                    <button class="undo-row-btn" style="display:none;" onclick="restoreRow(this)">↩</button>
+                </td>
+            `;
+            tbody.appendChild(newRow);
+        }
+
         // הסתרת טבלה
-        function dimTable(wrapperId) {
-            var wrapper = document.getElementById(wrapperId);
+        function dimTable(btn) {
+            const wrapper = btn.closest('.box-table-wrapper');
             wrapper.classList.add('dimmed');
             wrapper.querySelector('.trashBtn').style.display = 'none';
             wrapper.querySelector('.undoBtn').style.display = 'block';
+            updateBoxNumbers();
         }
 
-        // שחזור טבלה מוסתרת
-        function restoreTable(wrapperId) {
-            var wrapper = document.getElementById(wrapperId);
+        // שחזור טבלה
+        function restoreTable(btn) {
+            const wrapper = btn.closest('.box-table-wrapper');
             wrapper.classList.remove('dimmed');
             wrapper.querySelector('.trashBtn').style.display = 'block';
             wrapper.querySelector('.undoBtn').style.display = 'none';
+            updateBoxNumbers();
         }
 
         // הסתרת שורה
         function hideRow(btn) {
-            var tr = btn.closest('tr');
+            const tr = btn.closest('tr');
             tr.classList.add('row-dimmed');
+            tr.querySelector('.del-row-btn').style.display = 'none';
+            tr.querySelector('.undo-row-btn').style.display = 'inline';
         }
 
         // שחזור שורה
         function restoreRow(btn) {
-            var tr = btn.closest('tr');
+            const tr = btn.closest('tr');
             tr.classList.remove('row-dimmed');
+            tr.querySelector('.del-row-btn').style.display = 'inline';
+            tr.querySelector('.undo-row-btn').style.display = 'none';
         }
+
+        // עדכון ראשוני של המספרים
+        updateBoxNumbers();
     </script>
 
 </body>
