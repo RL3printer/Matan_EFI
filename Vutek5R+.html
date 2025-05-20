@@ -1,5 +1,4 @@
 
-
 <!DOCTYPE html>
 <html lang="he">
 <head>
@@ -40,9 +39,10 @@
             padding: 4px;
             text-align: center;
             color: #176c4c;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
+            overflow: visible;
+            text-overflow: unset;
+            white-space: normal;
+            word-wrap: break-word;
         }
         .box-table th {
             background: #e6f2ef;
@@ -51,9 +51,33 @@
         .box-table th.box-header {
             background: #e6f2ef;
             color: #176c4c;
-            width: 13%;
+            width: 10%; /* התאמת רוחב לעמודה BOX */
             padding: 0;
-            white-space: nowrap;
+            white-space: normal; /* לאפשר שבירת שורות */
+            line-height: 1.2; /* התאמת גובה שורה למראה אנכי */
+        }
+        .desc-col {
+            text-align: left;
+            font-weight: bold;
+            color: #176c4c;
+            width: 48%; /* התאמת רוחב לעמודה DESCRIPTION */
+            white-space: normal;
+            word-break: break-all;
+        }
+        .pn-col {
+            width: 15%; /* רוחב מותאם לעמודה P/N */
+            font-weight: bold;
+        }
+        .qty-col {
+            width: 10%; /* רוחב מותאם לעמודה Qty */
+            font-weight: bold;
+        }
+        .check-col {
+            width: 12%; /* רוחב מותאם לעמודה CHECK LIST */
+            font-weight: bold;
+        }
+        .action-col {
+            width: 5%; /* רוחב מותאם לעמודה החדשה של כפתורי פעולה */
         }
         input[type="checkbox"] {
             width: 16px;
@@ -204,39 +228,67 @@
         </button>
         <table class="box-table">
             <tr>
-                <th class="box-header" rowspan="4">BOX<br><span class="box-current"></span> מתוך <span class="box-total"></span></th>
+                <th class="box-header" rowspan="4">BOX<br><span class="box-current"></span><br>מתוך<br><span class="box-total"></span></th>
                 <th>DESCRIPTION</th>
                 <th>P/N</th>
-                <th>QUANTITY</th>
+                <th>Qty</th>
                 <th>CHECK LIST</th>
             </tr>
             <tr>
-                <td>Double Wheel Holder</td>
-                <td>11100461</td>
-                <td>3</td>
-                <td><input type="checkbox"></td>
+                <td class="desc-col">Double Wheel Holder</td>
+                <td class="pn-col">11100461</td>
+                <td class="qty-col">3</td>
+                <td class="check-col"><input type="checkbox"></td>
             </tr>
             <tr>
-                <td>SHAFT SUPPORT</td>
-                <td>11102040</td>
-                <td>4</td>
-                <td><input type="checkbox"></td>
+                <td class="desc-col">SHAFT SUPPORT</td>
+                <td class="pn-col">11102040</td>
+                <td class="qty-col">4</td>
+                <td class="check-col"><input type="checkbox"></td>
             </tr>
             <tr>
-                <td>BALL LOCK PINS D=12 L=70</td>
-                <td>77700657</td>
-                <td>4</td>
-                <td><input type="checkbox"></td>
+                <td class="desc-col">BALL LOCK PINS D=12 L=70</td>
+                <td class="pn-col">77700657</td>
+                <td class="qty-col">4</td>
+                <td class="check-col"><input type="checkbox"></td>
             </tr>
         </table>
     </div>
 
-    <!-- טבלה שניה - BOX 2 -->
-   
-    <!-- טבלה שניה - BOX 3 -->
-   
-    <!-- טבלה שניה - BOX 4 -->
-   
+
+<!-- טבלה ראשונה - עם טפריט נפתח -->
+    <div class="box-table-wrapper">
+        <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable(this)">
+            <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete">
+        </button>
+        <button class="icon-btn undoBtn" title="החזר טבלה" style="display:none;" onclick="restoreTable(this)">
+            <img src="https://cdn-icons-png.flaticon.com/512/109/109618.png" alt="Undo">
+        </button>
+        <table class="box-table">
+        <tr>
+            <th>BOX<br>5/41</th>
+            <th>DESCRIPTION</th>
+            <th>P/N</th>
+            <th>Qty>
+            <th>CHECK<br>LIST</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>MEDIA DISK</td>
+            <td>11100551</td>
+            <td>
+                <select>
+                    <option>2</option>
+                    <option>4</option>
+                    <option>6</option>
+                </select>
+            </td>
+            <td><input type="checkbox"></td>
+        </tr>
+    </table
+
+
+
     <!-- טבלה אחרונה - BOX 42 עם מחיקת שורות -->
     <div class="box-table-wrapper">
         <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable(this)">
@@ -247,19 +299,19 @@
         </button>
         <table class="box-table">
             <tr>
-                <th class="box-header" rowspan="10">BOX<br><span class="box-current"></span> מתוך <span class="box-total"></span></th>
+                <th class="box-header" rowspan="10">BOX<br><span class="box-current"></span><br>מתוך<br><span class="box-total"></span></th>
                 <th>DESCRIPTION</th>
                 <th>P/N</th>
-                <th>QUANTITY</th>
+                <th>Qty</th>
                 <th>CHECK LIST</th>
-                <th></th>
+                <th class="action-col"></th> <!-- עמודה חדשה עבור כפתורי פעולה -->
             </tr>
             <tr>
-                <td>INK EFI MATAN SUPERRANGE XF V3 CYAN</td>
-                <td>45190876</td>
-                <td><input type="text" style="width:70px"></td>
-                <td><input type="checkbox"></td>
-                <td>
+                <td class="desc-col">INK EFI MATAN SUPERRANGE XF V3 CYAN</td>
+                <td class="pn-col">45190876</td>
+                <td class="qty-col"><input type="text" style="width:70px"></td>
+                <td class="check-col"><input type="checkbox"></td>
+                <td class="action-col">
                     <button class="del-row-btn" onclick="hideRow(this)">✖</button>
                     <button class="undo-row-btn" onclick="restoreRow(this)">↩</button>
                 </td>
@@ -293,17 +345,22 @@
                 </button>
                 <table class="box-table">
                     <tr>
-                        <th class="box-header" rowspan="2">BOX<br><span class="box-current"></span> מתוך <span class="box-total"></span></th>
+                        <th class="box-header" rowspan="2">BOX<br><span class="box-current"></span><br>מתוך<br><span class="box-total"></span></th>
                         <th>DESCRIPTION</th>
                         <th>P/N</th>
-                        <th>QUANTITY</th>
+                        <th>Qty</th>
                         <th>CHECK LIST</th>
+                        <th class="action-col"></th>
                     </tr>
                     <tr>
-                        <td><input type="text" placeholder="תיאור"></td>
-                        <td><input type="text" placeholder="מק״ט"></td>
-                        <td><input type="number" placeholder="כמות"></td>
-                        <td><input type="checkbox"></td>
+                        <td class="desc-col"><input type="text" placeholder="תיאור"></td>
+                        <td class="pn-col"><input type="text" placeholder="מק״ט"></td>
+                        <td class="qty-col"><input type="number" placeholder="כמות"></td>
+                        <td class="check-col"><input type="checkbox"></td>
+                        <td class="action-col">
+                            <button class="del-row-btn" onclick="hideRow(this)">✖</button>
+                            <button class="undo-row-btn" style="display:none;" onclick="restoreRow(this)">↩</button>
+                        </td>
                     </tr>
                 </table>
             `;
@@ -318,11 +375,11 @@
             const tbody = table.querySelector('tbody') || table;
             const newRow = document.createElement('tr');
             newRow.innerHTML = `
-                <td><input type="text" placeholder="תיאור"></td>
-                <td><input type="text" placeholder="מק״ט"></td>
-                <td><input type="number" placeholder="כמות"></td>
-                <td><input type="checkbox"></td>
-                <td>
+                <td class="desc-col"><input type="text" placeholder="תיאור"></td>
+                <td class="pn-col"><input type="text" placeholder="מק״ט"></td>
+                <td class="qty-col"><input type="number" placeholder="כמות"></td>
+                <td class="check-col"><input type="checkbox"></td>
+                <td class="action-col">
                     <button class="del-row-btn" onclick="hideRow(this)">✖</button>
                     <button class="undo-row-btn" style="display:none;" onclick="restoreRow(this)">↩</button>
                 </td>
