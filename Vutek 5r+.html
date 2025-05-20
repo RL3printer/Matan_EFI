@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="he">
+<head>
+    <meta charset="UTF-8" />
+    <title>Vutek 5r+ - Box Status Integration</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <style>
+        /* עיצוב כללי */
+        body {
+            font-family: Arial, sans-serif;
+            background: #fff;
+            margin: 0;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+            color: #176c4c;
+            margin: 18px 0 10px 0;
+            font-size: 1.28em;
+            letter-spacing: 1px;
+        }
+
+        /* עיצוב עוטף טבלאות */
+        .box-table-wrapper {
+            position: relative;
+            width: 650px;
+            max-width: 98vw;
+            margin: 18px auto 0 auto;
+            page-break-inside: avoid;
+        }
+
+        /* עיצוב הטבלה */
+        .box-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            font-size: 0.93em;
+        }
+
+        .box-table th, .box-table td {
+            border: 1px solid #176c4c;
+            padding: 4px;
+            text-align: center;
+            color: #176c4c;
+        }
+
+        .box-table th {
+            background: #e6f2ef;
+            font-weight: bold;
+        }
+
+        .box-table th.box-header {
+            background: #e6f2ef;
+            color: #176c4c;
+            width: 13%;
+            padding: 0;
+        }
+
+        input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        /* כפתורי מחיקה/שחזור טבלה */
+        .icon-btn {
+            position: absolute;
+            top: 4px;
+            right: -30px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            z-index: 10;
+            padding: 0;
+        }
+
+        .icon-btn img {
+            width: 22px;
+            height: 22px;
+            display: block;
+        }
+
+        /* טבלה שמוסתרת */
+        .dimmed {
+            opacity: 0.34;
+            pointer-events: none;
+            filter: grayscale(0.7) blur(1px);
+            user-select: none;
+        }
+
+        .dimmed * {
+            pointer-events: none !important;
+            user-select: none !important;
+        }
+
+        .box-table-wrapper.dimmed .undoBtn {
+            pointer-events: auto !important;
+            filter: none !important;
+            opacity: 1 !important;
+        }
+
+        /* כפתורים צפים */
+        .floating-window {
+            position: fixed;
+            top: 18px;
+            left: 18px;
+            background: #fff;
+            border: 2px solid #23b6d8;
+            border-radius: 16px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.10);
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            align-items: center;
+            padding: 12px 10px;
+            user-select: none;
+        }
+
+        .floating-window button {
+            background: none;
+            border: none;
+            padding: 0;
+            cursor: pointer;
+            transition: transform 0.13s;
+            outline: none;
+        }
+
+        .floating-window button:focus,
+        .floating-window button:hover {
+            transform: scale(1.08);
+        }
+
+        .floating-window img {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #fff;
+            border: 2px solid #ff9900;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+        }
+
+        .floating-window .add-btn {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: #23b6d8;
+            color: #fff;
+            font-size: 2em;
+            line-height: 0.8;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .floating-window .add-btn:hover {
+            background: #176c4c;
+        }
+
+        /* עיצוב שורות מוסתרות */
+        .row-dimmed td, .row-dimmed input {
+            color: #aaa !important;
+            background: #f5f5f5 !important;
+        }
+
+        .row-dimmed input {
+            pointer-events: none;
+        }
+
+        .row-dimmed .del-row-btn {
+            display: none;
+        }
+
+        .row-dimmed .undo-row-btn {
+            display: inline;
+        }
+
+        .undo-row-btn {
+            display: none;
+        }
+
+        /* עיצוב להדפסה */
+        @media print {
+            .floating-window, .icon-btn {
+                display: none !important;
+            }
+
+            .box-table-wrapper.dimmed {
+                display: none !important;
+            }
+
+            .box-table {
+                box-shadow: none !important;
+            }
+
+            .box-table th, .box-table td {
+                font-size: 0.93em !important;
+                padding: 2px 2px !important;
+            }
+
+            @page {
+                size: A4 portrait;
+                margin: 8mm;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- חלון כפתורים צף -->
+    <div class="floating-window">
+        <button title="הצג כ-PDF" onclick="window.print()">
+            <img src="https://raw.githubusercontent.com/RL3printer/Matan_EFI/main/icons/pdficon.png" alt="PDF">
+        </button>
+        <button title="חזרה לדף הבית" onclick="window.location.href='index.html'">
+            <img src="https://raw.githubusercontent.com/RL3printer/Matan_EFI/main/icons/backIcon.jpg" alt="Home">
+        </button>
+        <button class="add-btn" title="הוסף טבלה ריקה" onclick="alert('הוספת טבלאות חסומה כאן')">+</button>
+    </div>
+
+    <h1>Vutek 5r+ - Box Status Integration</h1>
+
+    <!-- טבלה ראשונה - BOX 1 -->
+    <div class="box-table-wrapper" id="box1">
+        <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable('box1')">
+            <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete">
+        </button>
+        <button class="icon-btn undoBtn" title="החזר טבלה" style="display:none;" onclick="restoreTable('box1')">
+            <img src="https://cdn-icons-png.flaticon.com/512/109/109618.png" alt="Undo">
+        </button>
+        <table class="box-table">
+            <tr>
+                <th class="box-header" rowspan="4">BOX<br>1/41</th>
+                <th>DESCRIPTION</th>
+                <th>P/N</th>
+                <th>QUANTITY</th>
+                <th>CHECK LIST</th>
+            </tr>
+            <tr>
+                <td>Double Wheel Holder</td>
+                <td>11100461</td>
+                <td>3</td>
+                <td><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>SHAFT SUPPORT</td>
+                <td>11102040</td>
+                <td>4</td>
+                <td><input type="checkbox"></td>
+            </tr>
+            <tr>
+                <td>BALL LOCK PINS D=12 L=70</td>
+                <td>77700657</td>
+                <td>4</td>
+                <td><input type="checkbox"></td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- טבלה אחרונה - BOX 42 עם מחיקת שורות -->
+    <div class="box-table-wrapper" id="box42">
+        <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable('box42')">
+            <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete">
+        </button>
+        <button class="icon-btn undoBtn" title="החזר טבלה" style="display:none;" onclick="restoreTable('box42')">
+            <img src="https://cdn-icons-png.flaticon.com/512/109/109618.png" alt="Undo">
+        </button>
+        <table class="box-table">
+            <tr>
+                <th class="box-header" rowspan="10">BOX<br>42/42</th>
+                <th>DESCRIPTION</th>
+                <th>P/N</th>
+                <th>QUANTITY</th>
+                <th>CHECK LIST</th>
+                <th></th>
+            </tr>
+            <!-- כל שורה ניתנת להסתרה או שחזור -->
+            <tr>
+                <td>INK EFI MATAN SUPERRANGE XF V3 CYAN</td>
+                <td>45190876</td>
+                <td><input type="text" style="width:70px"></td>
+                <td><input type="checkbox"></td>
+                <td>
+                    <button class="del-row-btn" onclick="hideRow(this)">✖</button>
+                    <button class="undo-row-btn" onclick="restoreRow(this)">↩</button>
+                </td>
+            </tr>
+            <!-- אפשר להוסיף עוד שורות באותו פורמט... -->
+        </table>
+    </div>
+
+    <script>
+        // הסתרת טבלה
+        function dimTable(wrapperId) {
+            var wrapper = document.getElementById(wrapperId);
+            wrapper.classList.add('dimmed');
+            wrapper.querySelector('.trashBtn').style.display = 'none';
+            wrapper.querySelector('.undoBtn').style.display = 'block';
+        }
+
+        // שחזור טבלה מוסתרת
+        function restoreTable(wrapperId) {
+            var wrapper = document.getElementById(wrapperId);
+            wrapper.classList.remove('dimmed');
+            wrapper.querySelector('.trashBtn').style.display = 'block';
+            wrapper.querySelector('.undoBtn').style.display = 'none';
+        }
+
+        // הסתרת שורה
+        function hideRow(btn) {
+            var tr = btn.closest('tr');
+            tr.classList.add('row-dimmed');
+        }
+
+        // שחזור שורה
+        function restoreRow(btn) {
+            var tr = btn.closest('tr');
+            tr.classList.remove('row-dimmed');
+        }
+    </script>
+
+</body>
+</html>
