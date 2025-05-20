@@ -383,37 +383,6 @@
         </table>
     </div>
 
-    <!-- טבלה אחרונה - BOX 42 עם מחיקת שורות -->
-    <div class="box-table-wrapper">
-        <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable(this)">
-            <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete">
-        </button>
-        <button class="icon-btn undoBtn" title="החזר טבלה" style="display:none;" onclick="restoreTable(this)">
-            <img src="https://cdn-icons-png.flaticon.com/512/109/109618.png" alt="Undo">
-        </button>
-        <table class="box-table">
-            <tr>
-                <th class="box-header" rowspan="10">BOX<br><span class="box-current"></span> מתוך <span class="box-total"></span></th>
-                <th>DESCRIPTION</th>
-                <th>P/N</th>
-                <th>QUANTITY</th>
-                <th>CHECK LIST</th>
-                <th></th>
-            </tr>
-            <tr>
-                <td>INK EFI MATAN SUPERRANGE XF V3 CYAN</td>
-                <td>45190876</td>
-                <td><input type="text" style="width:70px"></td>
-                <td><input type="checkbox"></td>
-                <td>
-                    <button class="del-row-btn" onclick="hideRow(this)">✖</button>
-                    <button class="undo-row-btn" onclick="restoreRow(this)">↩</button>
-                </td>
-            </tr>
-            <!-- אפשר להוסיף עוד שורות באותו פורמט -->
-        </table>
-    </div>
-
     <script>
         // עדכון מספור BOX רק לטבלאות גלויות
         function updateBoxNumbers() {
