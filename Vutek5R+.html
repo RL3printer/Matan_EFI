@@ -342,136 +342,46 @@
         </table>
     </div>
     
-    <!-- טבלה אחרונה - BOX 42 עם מחיקת שורות -->
-    <div class="box-table-wrapper">
-        <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable(this)">
-            <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete">
-        </button>
-        <button class="icon-btn undoBtn" title="החזר טבלה" style="display:none;" onclick="restoreTable(this)">
-            <img src="https://cdn-icons-png.flaticon.com/512/109/109618.png" alt="Undo">
-        </button>
-        <table class="box-table">
-            <tr>
-                <th class="box-header" rowspan="10">BOX<br><span class="box-current"></span> מתוך <span class="box-total"></span></th>
-                <th>DESCRIPTION</th>
-                <th>P/N</th>
-                <th>QUANTITY</th>
-                <th>CHECK LIST</th>
-                <th></th>
-            </tr>
-            <tr>
-                <td>INK EFI MATAN SUPERRANGE XF V3 CYAN</td>
-                <td>45190876</td>
-                <td><input type="text" style="width:70px"></td>
-                <td><input type="checkbox"></td>
-                <td>
-                    <button class="del-row-btn" onclick="hideRow(this)">✖</button>
-                    <button class="undo-row-btn" onclick="restoreRow(this)">↩</button>
-                </td>
-            </tr>
-            <!-- אפשר להוסיף עוד שורות באותו פורמט -->
-        </table>
-    </div>
+	
+	
+	<div class="box-table-wrapper">
+    <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable(this)">
+        <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete">
+    </button>
+    <button class="icon-btn undoBtn" title="החזר טבלה" style="display:none;" onclick="restoreTable(this)">
+        <img src="https://cdn-icons-png.flaticon.com/512/109/109618.png" alt="Undo">
+    </button>
+    <table class="box-table">
+        <tr>
+            <th class="box-header" rowspan="2">BOX<br>5/41</th>
+            <th>DESCRIPTION</th>
+            <th>P/N</th>
+            <th>QUANTITY</th>
+            <th>CHECK LIST</th>
+        </tr>
+        <tr>
+            <td style="font-weight:bold; color:#24704d;">MEDIA DISK</td>
+            <td style="font-weight:bold; color:#24704d;">11100551</td>
+            <td>
+                <select style="font-size:1.1em; font-weight:bold; color:#24704d; border:1px solid #bdbdbd; border-radius:4px; min-width:50px; text-align:center;">
+                    <option selected>2</option>
+                    <option>4</option>
+                    <option>6</option>
+                </select>
+            </td>
+            <td><input type="checkbox"></td>
+        </tr>
+    </table>
+</div>
 
-    <script>
-        // עדכון מספור BOX רק לטבלאות גלויות
-        function updateBoxNumbers() {
-            const visibleWrappers = Array.from(document.querySelectorAll('.box-table-wrapper:not(.dimmed)'));
-            visibleWrappers.forEach((wrapper, index) => {
-                const currentSpan = wrapper.querySelector('.box-current');
-                const totalSpan = wrapper.querySelector('.box-total');
-                if(currentSpan) currentSpan.textContent = index + 1;
-                if(totalSpan) totalSpan.textContent = visibleWrappers.length;
-            });
-        }
-
-        // הוספת טבלה חדשה
-        function addEmptyTable() {
-            const wrapper = document.createElement('div');
-            wrapper.className = 'box-table-wrapper';
-            wrapper.innerHTML = `
-                <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable(this)">
-                    <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete">
-                </button>
-                <button class="icon-btn undoBtn" title="החזר טבלה" style="display:none;" onclick="restoreTable(this)">
-                    <img src="https://cdn-icons-png.flaticon.com/512/109/109618.png" alt="Undo">
-                </button>
-                <table class="box-table">
-                    <tr>
-                        <th class="box-header" rowspan="2">BOX<br><span class="box-current"></span> מתוך <span class="box-total"></span></th>
-                        <th>DESCRIPTION</th>
-                        <th>P/N</th>
-                        <th>QUANTITY</th>
-                        <th>CHECK LIST</th>
-                    </tr>
-                    <tr>
-                        <td><input type="text" placeholder="תיאור"></td>
-                        <td><input type="text" placeholder="מק״ט"></td>
-                        <td><input type="number" placeholder="כמות"></td>
-                        <td><input type="checkbox"></td>
-                    </tr>
-                </table>
-            `;
-            document.body.appendChild(wrapper);
-            updateBoxNumbers();
-        }
-
-        // הוספת שורה חדשה לטבלה קיימת
-        function addRowToTable(btn) {
-            const wrapper = btn.closest('.box-table-wrapper');
-            const table = wrapper.querySelector('.box-table');
-            const tbody = table.querySelector('tbody') || table;
-            const newRow = document.createElement('tr');
-            newRow.innerHTML = `
-                <td><input type="text" placeholder="תיאור"></td>
-                <td><input type="text" placeholder="מק״ט"></td>
-                <td><input type="number" placeholder="כמות"></td>
-                <td><input type="checkbox"></td>
-                <td>
-                    <button class="del-row-btn" onclick="hideRow(this)">✖</button>
-                    <button class="undo-row-btn" style="display:none;" onclick="restoreRow(this)">↩</button>
-                </td>
-            `;
-            tbody.appendChild(newRow);
-        }
-
-        // הסתרת טבלה
-        function dimTable(btn) {
-            const wrapper = btn.closest('.box-table-wrapper');
-            wrapper.classList.add('dimmed');
-            wrapper.querySelector('.trashBtn').style.display = 'none';
-            wrapper.querySelector('.undoBtn').style.display = 'block';
-            updateBoxNumbers();
-        }
-
-        // שחזור טבלה
-        function restoreTable(btn) {
-            const wrapper = btn.closest('.box-table-wrapper');
-            wrapper.classList.remove('dimmed');
-            wrapper.querySelector('.trashBtn').style.display = 'block';
-            wrapper.querySelector('.undoBtn').style.display = 'none';
-            updateBoxNumbers();
-        }
-
-        // הסתרת שורה
-        function hideRow(btn) {
-            const tr = btn.closest('tr');
-            tr.classList.add('row-dimmed');
-            tr.querySelector('.del-row-btn').style.display = 'none';
-            tr.querySelector('.undo-row-btn').style.display = 'inline';
-        }
-
-        // שחזור שורה
-        function restoreRow(btn) {
-            const tr = btn.closest('tr');
-            tr.classList.remove('row-dimmed');
-            tr.querySelector('.del-row-btn').style.display = 'inline';
-            tr.querySelector('.undo-row-btn').style.display = 'none';
-        }
-
-        // עדכון ראשוני של המספרים
-        updateBoxNumbers();
-    </script>
-
-</body>
-</html>
+<style>
+.box-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    font-size: 1.1em;
+    color: #1a3d25;
+    background: #fff;
+}
+.box-table th, .box-table td {
+    border: 1px solid #24704d;
