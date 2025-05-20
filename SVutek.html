@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8">
   <title>STATUS</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
     body {
       background: #fff;
@@ -12,109 +11,82 @@
       margin: 0;
       padding: 0;
     }
-    h1 {
-      color: #e53935;
-      text-align: center;
-      margin: 20px 0 10px 0;
-      font-size: 2rem;
-      letter-spacing: 1px;
-    }
-    .main-container {
-      max-width: 1200px;
-      margin: 0 auto;
-      display: flex;
-      gap: 12px;
-      justify-content: center;
-      align-items: flex-start;
-    }
-    .col {
-      flex: 1 1 0;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-      min-width: 0;
-    }
     .customer-row {
-      max-width: 1200px;
-      margin: 0 auto 12px auto;
-      font-size: 1.11rem;
+      max-width: 1000px;
+      margin: 20px auto 12px auto;
+      font-size: 1.07rem;
       font-weight: bold;
       text-align: left;
-    }
-    .customer-row label {
-      margin-right: 8px;
       color: #006699;
     }
-    .customer-input {
+    .customer-row input[type="text"] {
       border: 2px solid #ff9900;
       border-radius: 4px;
-      width: 500px;
-      display: inline-block;
+      width: 220px;
       margin-left: 10px;
       padding: 2px 8px;
       font-size: 1rem;
       background: #fafafa;
-      transition: border 0.2s;
-      vertical-align: middle;
     }
-    .customer-input:focus {
-      border: 2px solid #e53935;
-      outline: none;
-      background: #fffbe8;
+    .main-container {
+      max-width: 1000px;
+      margin: 0 auto;
+      display: flex;
+      gap: 18px;
+      justify-content: center;
+      align-items: flex-start;
     }
-    .form-section {
-      border: 1px solid #bbb;
-      border-radius: 2px;
+    .col {
+      width: 49.5%;
+      min-width: 0;
+      box-sizing: border-box;
       background: #fff;
-      margin-bottom: 0;
-      overflow: hidden;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+      border: 1px solid #bdbdbd;
+      border-radius: 4px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.07);
+      padding: 0 0 8px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
     }
     .section-title {
-      color: #ff6600;
       font-weight: bold;
-      font-size: 1.07rem;
+      font-size: 1.00rem;
       text-align: center;
-      border-bottom: 2px solid #ff6600;
-      background: #fff;
+      border-bottom: 2px solid #ff9900;
       margin: 0;
-      padding: 4px 0 2px 0;
-      letter-spacing: 0.5px;
+      padding: 3px 0 1px 0;
+      background: #fff;
+      color: #ff9900;
     }
+    .section-title.burn { color: #e86b1c; border-bottom: 2px solid #e86b1c; }
+    .section-title.computers { color: #1c7be8; border-bottom: 2px solid #1c7be8; }
+    .section-title.new { color: #1cae3a; border-bottom: 2px solid #1cae3a; }
+    .section-title.old { color: #e86b1c; border-bottom: 2px solid #e86b1c; }
     .custom-table {
       width: 100%;
       border-collapse: collapse;
       background: #fff;
       font-size: 1em;
+      margin-bottom: 0;
     }
-    .custom-table th,
-    .custom-table td {
+    .custom-table th, .custom-table td {
       border: 1px solid #bbb;
-      padding: 3px 7px;
+      padding: 3px 6px;
       color: #222;
       font-family: Arial, sans-serif;
       font-size: 1em;
       vertical-align: middle;
       text-align: left;
       background: #fff;
-      height: 28px;
-    }
-    .custom-table th.section-title {
-      color: #ff6600;
-      font-weight: bold;
-      text-align: center;
-      font-size: 1.07em;
-      border-bottom: 2px solid #ff6600;
-      background: #fff;
-      letter-spacing: 1px;
-      padding: 4px 0 2px 0;
+      height: 22px;
     }
     .custom-table input[type="text"], .custom-table select {
       width: 98%;
       font-size: 1em;
       border: 1px solid #bbb;
       border-radius: 2px;
-      padding: 2px 2px;
+      padding: 1px 2px;
       background: #fff;
       box-sizing: border-box;
     }
@@ -147,34 +119,7 @@
       margin-right: 0;
       float: right;
     }
-    /* רספונסיביות */
-    @media (max-width: 900px) {
-      .main-container {
-        flex-direction: column;
-        align-items: stretch;
-        padding: 8px 2vw;
-        max-width: 99vw;
-        gap: 0;
-      }
-      .col {
-        min-width: 0;
-        max-width: 100%;
-      }
-      .customer-row {
-        max-width: 99vw;
-      }
-    }
-    @media print {
-      @page { size: landscape; margin: 0.5cm; }
-      html, body { background: #fff !important; color: #111 !important; }
-      .main-container, .customer-row { max-width: 100vw !important; margin: 0 !important; padding: 0 !important; box-shadow: none !important; background: #fff !important;}
-      h1 { font-size: 1.2rem !important; margin-bottom: 8px !important; }
-      .custom-table, .custom-table th, .custom-table td { font-size: 0.97em !important; padding: 2px 4px !important; }
-      input, select { font-size: 0.97em !important; }
-    }
- 
-
-    /* חלון צף עם אייקונים */
+    /* חלון צף */
     .floating-window {
       position: fixed;
       top: 24px;
@@ -215,21 +160,21 @@
     .floating-window img:hover {
       box-shadow: 0 3px 12px rgba(255,153,0,0.19);
     }
-    /* רספונסיביות למסכים קטנים */
     @media (max-width: 900px) {
       .main-container {
         flex-direction: column;
         align-items: stretch;
-        padding: 0 2vw;
-        max-width: 98vw;
+        padding: 8px 2vw;
+        max-width: 99vw;
         gap: 0;
       }
       .col {
         min-width: 0;
         max-width: 100%;
+        margin-bottom: 16px;
       }
-      .notes-section, .customer-row {
-        max-width: 98vw;
+      .customer-row {
+        max-width: 99vw;
       }
       .floating-window {
         left: 8px;
@@ -242,255 +187,135 @@
         height: 36px;
       }
     }
-    /* עיצוב הדפסה - הכל נכנס לעמוד אחד לרוחב (landscape) */
+    /* הדפסה מכווצת במיוחד במצב Portrait */
     @media print {
-      @page {
-        size: landscape;
-        margin: 0.5cm;
-      }
+      @page { size: A4 portrait; margin: 0.3cm; }
       html, body {
-        background: #fff !important;
-        color: #111 !important;
-        width: 100vw;
-        height: 100vh;
-        font-size: 11px !important;
-        margin: 0;
-        padding: 0;
-        box-shadow: none !important;
-      }
-      h1 {
-        font-size: 1.2rem !important;
-        margin: 0 0 6px 0 !important;
-      }
-      .main-container,
-      .customer-row,
-      .notes-section {
-        max-width: 100vw !important;
+        font-size: 8.5pt !important;
+        line-height: 1.05 !important;
         margin: 0 !important;
         padding: 0 !important;
-        box-shadow: none !important;
         background: #fff !important;
+        color: #111 !important;
       }
       .main-container {
-        gap: 8px !important;
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: space-between;
+        align-items: flex-start;
+        width: 100vw;
+        max-width: 100vw !important;
+        gap: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
       }
       .col {
-        gap: 5px !important;
-      }
-      .section-title {
-        font-size: 0.98rem !important;
-        padding-bottom: 1px !important;
-        margin-top: 4px !important;
-        margin-bottom: 0 !important;
-      }
-      .custom-table,
-      .custom-table th, .custom-table td {
-        font-size: 0.95em !important;
-        padding: 2px 3px !important;
+        width: 49.5% !important;
+        min-width: 0 !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        box-sizing: border-box !important;
         border-width: 1px !important;
+        box-shadow: none !important;
       }
-      .custom-table input[type="text"],
-      .options-table input[type="text"] {
-        font-size: 0.95em !important;
-        padding: 1px 2px !important;
-        width: 95% !important;
-      }
-      .notes-section textarea {
-        font-size: 0.95em !important;
-        min-height: 30px !important;
-        padding: 2px 4px !important;
-      }
-      .floating-window {
-        display: none !important; /* לא להדפיס את החלון הצף */
-      }
+      .section-title { font-size: 0.92em !important; padding: 1px 0 !important; margin: 0 !important; border-width: 1px !important;}
+      .custom-table, .custom-table th, .custom-table td { font-size: 0.82em !important; padding: 1px 2px !important; border-width: 1px !important;}
+      input, select { font-size: 0.82em !important; padding: 1px 2px !important; margin: 0 !important; width: 98% !important; box-sizing: border-box !important;}
+      .customer-row { margin: 0 0 4px 0 !important; font-size: 1em !important; max-width: 100vw !important; padding: 0 !important;}
+      .floating-window { display: none !important; }
     }
   </style>
 </head>
 <body>
-  <!-- חלון צף עם שני אייקונים (PDF וחזרה) -->
+  <!-- חלון צף -->
   <div class="floating-window" id="floatWin">
-    <!-- כפתור הדפסה -->
     <button title="הצג כ-PDF" onclick="window.print()">
       <img src="https://raw.githubusercontent.com/RL3printer/Matan_EFI/main/icons/pdficon.png" alt="PDF">
     </button>
-    <!-- כפתור חזרה לדף הבית -->
     <button title="חזרה לדף הבית" onclick="window.location.href='index.html'">
       <img src="https://raw.githubusercontent.com/RL3printer/Matan_EFI/main/icons/backIcon.jpg" alt="Home">
     </button>
   </div>
-  <!-- כותרת ראשית -->
-  <h1>STATUS</h1>
-  <!-- שדה לקוח -->
   <div class="customer-row">
-    <label for="customerName">Customer name:</label>
-    <input type="text" class="customer-input" id="customerName" name="customerName" placeholder="">
+    Customer name: <input type="text">
   </div>
-
-  <!-- שתי עמודות של טפסים -->
   <div class="main-container">
     <!-- עמודה שמאלית -->
     <div class="col">
-      <div class="form-section">
+      <div>
         <div class="section-title">Configuration</div>
         <table class="custom-table">
-          <tr>
-            <td>Serial Number</td>
-            <td><input type="text" placeholder="s/n"></td>
-          </tr>
-          <tr>
-            <td>Name</td>
-            <td>
-              <select>
-                <option></option>
-                <option>Vutek 5r+</option>
-                <option>Vutek 3r+</option>
-                <option>Vutek D 5r</option>
-                <option>Vutek D 3r</option>
-                <option>Vutek Q 5r</option>
-                <option>Vutek Q 3r</option>
-                <option>Matan 5</option>
-                <option>Matan 3</option>
-              </select>
-            </td>
-          </tr>
-           <tr>
-                <td>Type</td>
-                <td>
-                  <!-- קווים לסוג צבעי הדפסה -->
-                  <select class="form-control mb-1">
-                    <option></option><option>4 Color</option><option>8 Color</option>
-                  </select>
-                  <!-- קווים ל־White/In-line White -->
-                  <select class="form-control mb-1">
-                    <option></option><option>White</option><option>4 Fixed White</option><option>6 Fixed White</option>
-                  </select>
-                  <!-- קווים עבור וורניש -->
-                  <select class="form-control"><option></option><option>Varnish</option></select>
-                </td>
-              </tr>
-          <tr>
-            <td>S/W front end</td>
-            <td><input type="text"></td>
-          </tr>
+          <tr><td>Serial Number</td><td><input type="text"></td></tr>
+          <tr><td>Name</td><td><input type="text"></td></tr>
+          <tr><td>Type</td><td><input type="text"></td></tr>
+          <tr><td>S/W front end</td><td><input type="text"></td></tr>
         </table>
       </div>
-      <div class="form-section">
-        <div class="section-title">Burn Version</div>
+      <div>
+        <div class="section-title burn">Burn Version</div>
         <table class="custom-table">
-          <tr>
-            <td>Controller</td>
-            <td><input type="text"></td>
-          </tr>
-          <tr>
-            <td>PLC/OFEK Block</td>
-            <td><input type="text"></td>
-          </tr>
-          <tr>
-            <td>PLC/OFEK Machine</td>
-            <td><input type="text"></td>
-          </tr>
+          <tr><td>Controller</td><td><input type="text"></td></tr>
+          <tr><td>PLC/OFEK Block</td><td><input type="text"></td></tr>
+          <tr><td>PLC/OFEK Machine</td><td><input type="text"></td></tr>
         </table>
       </div>
-      <div class="form-section">
-        <div class="section-title">Computers & Plugs</div>
+      <div>
+        <div class="section-title computers">Computers & Plugs</div>
         <table class="custom-table">
-          <tr>
-            <td>S/N Computer</td>
-            <td><input type="text"></td>
-          </tr>
-          <tr>
-            <td>Plug ID</td>
-            <td><input type="text"></td>
-          </tr>
-          <tr>
-            <td>S/N Caldera</td>
-            <td><input type="text"></td>
-          </tr>
-          <tr>
-            <td>Plug Caldera</td>
-            <td><input type="text"></td>
-          </tr>
+          <tr><td>S/N Computer</td><td><input type="text"></td></tr>
+          <tr><td>Plug ID</td><td><input type="text"></td></tr>
+          <tr><td>S/N Caldera</td><td><input type="text"></td></tr>
+          <tr><td>Plug Caldera</td><td><input type="text"></td></tr>
         </table>
       </div>
-      <div class="form-section">
-        <div class="section-title">For NEW data pass options</div>
+      <div>
+        <div class="section-title new">For NEW data pass options</div>
         <table class="custom-table">
-          <tr>
-            <td>Video card FPGA</td>
-            <td><input type="text" value="0x"></td>
-          </tr>
-          <tr>
-            <td>Carriage FPGA (Tarro)</td>
-            <td><input type="text" value="0x"></td>
-          </tr>
-          <tr>
-            <td>Id Card FPGA (Maxwell)</td>
-            <td><input type="text" value="0x"></td>
-          </tr>
-          <tr>
-            <td>DP SW Ver</td>
-            <td><input type="text"></td>
-          </tr>
+          <tr><td>Video card FPGA</td><td><input type="text" value="0x"></td></tr>
+          <tr><td>Carriage FPGA (Tarro)</td><td><input type="text" value="0x"></td></tr>
+          <tr><td>Id Card FPGA (Maxwell)</td><td><input type="text" value="0x"></td></tr>
+          <tr><td>DP SW Ver</td><td><input type="text"></td></tr>
         </table>
       </div>
-      <div class="form-section">
-        <div class="section-title">For OLD data pass options</div>
+      <div>
+        <div class="section-title old">For OLD data pass options</div>
         <table class="custom-table">
-          <tr>
-            <td>PCI uC</td>
-            <td><input type="text"></td>
-          </tr>
-          <tr>
-            <td>PCI fpga</td>
-            <td><input type="text"></td>
-          </tr>
-          <tr>
-            <td>BCC uC</td>
-            <td><input type="text"></td>
-          </tr>
-          <tr>
-            <td>BCC fpga</td>
-            <td><input type="text"></td>
-          </tr>
+          <tr><td>PCI uC</td><td><input type="text"></td></tr>
+          <tr><td>PCI fpga</td><td><input type="text"></td></tr>
+          <tr><td>BCC uC</td><td><input type="text"></td></tr>
+          <tr><td>BCC fpga</td><td><input type="text"></td></tr>
         </table>
       </div>
     </div>
     <!-- עמודה ימנית -->
     <div class="col">
-      <div class="form-section">
+      <div>
         <div class="section-title">OPTIONS INCLUDET</div>
         <table class="custom-table">
           <tr><td>MIST SEAL</td><td><input type="checkbox"></td></tr>
-          <tr>
-            <td>INK INCLUDET</td>
-            <td>
-              <select>
-                <option></option>
-                <option>Without</option>
-                <option>CMYK</option>
-                <option>CMYK+Lt</option>
-                <option>CMYK+W</option>
-                <option>CMYK+Lt+W</option>
-              </select>
-            </td>
-          </tr>
+          <tr><td>INK INCLUDET</td><td>
+            <select>
+              <option></option>
+              <option>Without</option>
+              <option>CMYK</option>
+              <option>CMYK+Lt</option>
+              <option>CMYK+W</option>
+              <option>CMYK+Lt+W</option>
+            </select>
+          </td></tr>
           <tr><td>MIST COLLECTOR</td><td><input type="checkbox"></td></tr>
-          <tr>
-            <td>LEDS</td>
-            <td>
-              <select>
-                <option></option>
-                <option>Long</option>
-                <option>Short</option>
-              </select>
-            </td>
-          </tr>
+          <tr><td>LEDS</td><td>
+            <select>
+              <option></option>
+              <option>Long</option>
+              <option>Short</option>
+            </select>
+          </td></tr>
           <tr><td>X MOTOR SUPPORT</td><td><input type="checkbox"></td></tr>
           <tr><td>MEDIA SHAFT 5.20M</td><td><input type="checkbox"></td></tr>
           <tr><td>PHOTO INTERRUPTER</td><td><input type="checkbox"></td></tr>
           <tr><td>PULS</td><td><input type="text" value="Wave-DRP2-T2-v2_2"></td></tr>
           <tr><td>CUTTER</td><td><input type="checkbox"></td></tr>
-          <!-- שורת AIR SHAFT FRONT -->
           <tr>
             <td class="airshaft-title" rowspan="3">AIR SHAFT FRONT</td>
             <td class="airshaft-cell">5.20M <input type="checkbox"></td>
@@ -508,7 +333,6 @@
               </select>
             </td>
           </tr>
-          <!-- שורת AIR SHAFT REAR -->
           <tr>
             <td class="airshaft-title" rowspan="3">AIR SHAFT REAR</td>
             <td class="airshaft-cell">5.20M <input type="checkbox"></td>
@@ -532,16 +356,16 @@
           <tr><td>ID BACK PRINTER</td><td><input type="checkbox"></td></tr>
           <tr><td>H DETECTOR</td><td><input type="checkbox"></td></tr>
           <tr>
-		  <td>SHEET COLLECTOR</td>
+            <td>SHEET COLLECTOR</td>
             <td>
               <select>
                 <option></option>
                 <option>x1</option>
                 <option>x2</option>
-                <option>x3</optin>
+                <option>x3</option>
               </select>
             </td>
-		  </tr>
+          </tr>
           <tr><td>ONE SITE REPAIR KIT</td><td><input type="checkbox"></td></tr>
           <tr><td>INSTALLATION KIT</td><td><input type="checkbox"></td></tr>
           <tr><td>SLITTER</td><td><input type="checkbox"></td></tr>
@@ -549,17 +373,16 @@
           <tr><td>BALANCE T</td><td><input type="checkbox"></td></tr>
           <tr><td>BALANCE Y</td><td><input type="checkbox"></td></tr>
           <tr><td>SPREADERS KIT</td><td><input type="checkbox"></td></tr>
-		  <tr>
-		  <td>WASTE</td>
+          <tr>
+            <td>WASTE</td>
             <td>
               <select>
                 <option></option>
                 <option>Big</option>
                 <option>Small</option>
-               
               </select>
             </td>
-		  </tr>  
+          </tr>
           <tr><td>CHILLER</td><td><input type="checkbox"></td></tr>
           <tr><td>ORANGE CABLES 110V</td><td><input type="checkbox"></td></tr>
           <tr><td>ROLL & TYPE</td><td><input type="checkbox"></td></tr>
@@ -570,22 +393,22 @@
       </div>
     </div>
   </div>
+  <script>
+    // גרירה של החלון הצף
+    const floatWin = document.getElementById('floatWin');
+    let isDragging = false, startX, startY;
+    floatWin.addEventListener('mousedown', e => {
+      if (e.target.tagName === 'BUTTON' || e.target.tagName === 'IMG') return;
+      isDragging = true;
+      startX = e.clientX - floatWin.offsetLeft;
+      startY = e.clientY - floatWin.offsetTop;
+    });
+    document.addEventListener('mousemove', e => {
+      if (!isDragging) return;
+      floatWin.style.left = (e.clientX - startX) + 'px';
+      floatWin.style.top  = (e.clientY - startY) + 'px';
+    });
+    document.addEventListener('mouseup', () => { isDragging = false; });
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
