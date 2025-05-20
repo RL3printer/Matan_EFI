@@ -9,13 +9,15 @@
       background: #fff;
       font-family: Arial, sans-serif;
       color: #111;
+      margin: 0;
+      padding: 0;
     }
     /* עיצוב הכותרת הראשית */
     h1 {
       color: #e53935;
       text-align: center;
-       margin: 50px 0 10px 0; /* הוספת רווח של 50 פיקסלים בחלק העליון */
-       font-size: 2.2rem;
+      margin: 50px 0 10px 0; /* רווח במסך */
+      font-size: 2.2rem;
       letter-spacing: 1px;
     }
     /* קונטיינר ראשי שמרכז את שתי העמודות */
@@ -236,10 +238,10 @@
         height: 36px;
       }
     }
-    /* עיצוב הדפסה - הכל נכנס לעמוד אחד לרוחב (landscape) */
+    /* עיצוב הדפסה - הכל נכנס לעמוד אחד במצב Portrait */
     @media print {
       @page {
-        size: landscape;
+        size: A4 portrait; /* שינוי למצב Portrait */
         margin: 0.5cm;
       }
       html, body {
@@ -247,14 +249,15 @@
         color: #111 !important;
         width: 100vw;
         height: 100vh;
-        font-size: 11px !important;
+        font-size: 9px !important; /* הקטנת גופן כדי להתאים ל-Portrait */
         margin: 0;
         padding: 0;
+        margin-top: 15px !important; /* הוספת רווח של 15 פיקסלים בחלק העליון בהדפסה */
         box-shadow: none !important;
       }
       h1 {
-        font-size: 1.2rem !important;
-        margin: 0 0 6px 0 !important;
+        font-size: 1.1rem !important;
+        margin: 0 0 5px 0 !important;
       }
       .main-container,
       .customer-row,
@@ -266,33 +269,39 @@
         background: #fff !important;
       }
       .main-container {
-        gap: 8px !important;
+        display: flex !important;
+        flex-direction: row !important; /* שמירה על שתי טבלאות זו לצד זו */
+        gap: 5px !important; /* הקטנת המרווח בין הטבלאות */
       }
       .col {
-        gap: 5px !important;
+        flex: 1 1 0;
+        gap: 3px !important; /* הקטנת מרווחים פנימיים */
+        min-width: 0;
+        width: 49.5% !important; /* וידוא שכל עמודה תופסת חצי מהרוחב */
+        box-sizing: border-box !important;
       }
       .section-title {
-        font-size: 0.98rem !important;
+        font-size: 0.9rem !important;
         padding-bottom: 1px !important;
-        margin-top: 4px !important;
+        margin-top: 3px !important;
         margin-bottom: 0 !important;
       }
       .custom-table,
       .custom-table th, .custom-table td {
-        font-size: 0.95em !important;
-        padding: 2px 3px !important;
+        font-size: 0.85em !important;
+        padding: 1px 2px !important;
         border-width: 1px !important;
       }
       .custom-table input[type="text"],
       .options-table input[type="text"] {
-        font-size: 0.95em !important;
+        font-size: 0.85em !important;
         padding: 1px 2px !important;
         width: 95% !important;
       }
       .notes-section textarea {
-        font-size: 0.95em !important;
-        min-height: 30px !important;
-        padding: 2px 4px !important;
+        font-size: 0.85em !important;
+        min-height: 25px !important;
+        padding: 2px 3px !important;
       }
       .floating-window {
         display: none !important; /* לא להדפיס את החלון הצף */
