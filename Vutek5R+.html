@@ -7,7 +7,6 @@
     <title>Vutek 5r+ - Box Status Integration</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-/* סגנונות כלליים לדף  CSS */
 /* סגנונות כלליים לדף */
 body {
     font-family: Arial, sans-serif; /* הגדרת גופן ברירת מחדל */
@@ -35,6 +34,7 @@ h1 {
 
 .box-table {
     width: 100%; /* רוחב מלא של המסגרת */
+    
     border-collapse: collapse; /* איחוד גבולות התאים */
     background: #fff; /* רקע לבן לטבלה */
     box-shadow: 0 2px 8px rgba(0,0,0,0.04); /* צל קל סביב הטבלה לעומק */
@@ -349,7 +349,20 @@ select {
         box-shadow: none !important; /* הסרת צל מהטבלה */
     }
     .box-table th, .box-table td {
-        font-size:
+        font-size: 0.93em !important; /* גודל גופן קטן */
+        padding: 2px 2px !important; /* ריווח פנימי קטן יותר */
+    }
+    .action-col, .action-col * {
+        display: none !important; /* הסתרת עמודת הפעולות (ACTION) בהדפסה */
+    }
+    .notes-section {
+        border: 1px solid #176c4c !important; /* שמירה על מסגרת בהדפסה */
+    }
+    #notes-area {
+        border: 1px solid #176c4c !important; /* שמירה על מסגרת בהדפסה */
+    }
+    @page {
+        size: A4 portrait; /* גוד
 
 
     </style>
