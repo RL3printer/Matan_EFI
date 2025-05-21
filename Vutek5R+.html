@@ -26,7 +26,7 @@ h1 {
 /* סגנונות לטבלה ולמסגרת סביבה */
 .box-table-wrapper {
     position: relative; /* מיקום יחסי כדי לאפשר מיקום מוחלט של כפתורים בתוכו */
-    width: 900px; /* רוחב קבוע לטבלה */
+    width: 900px; /* רוחב מוגדל לטבלה כפי שביקשת */
     max-width: 98vw; /* רוחב מקסימלי למניעת גלישה במסכים קטנים */
     margin: 18px auto 0 auto; /* מיקום במרכז הדף עם שוליים עליונים */
     page-break-inside: avoid; /* מניעת שבירת טבלה בהדפסה */
@@ -125,6 +125,19 @@ input[type="text"], input[type="number"] {
     color: #176c4c; /* צבע טקסט ירוק כהה, תואם לטבלה */
     font-size: 1em; /* גודל גופן תואם לטבלה */
     font-family: Arial, sans-serif; /* גופן תואם לטבלה */
+}
+
+/* סגנונות לתפריט נפתח (select) */
+select {
+    border: none; /* הסרת מסגרת סביב התפריט הנפתח */
+    background: transparent; /* רקע שקוף */
+    width: 100%; /* רוחב מלא של התא */
+    padding: 0; /* הסרת ריווח פנימי */
+    margin: 0; /* הסרת שוליים */
+    outline: none; /* הסרת מסגרת פוקוס */
+    color: #176c4c; /* צבע טקסט ירוק כהה */
+    font-size: 1em; /* גודל גופן תואם לטבלה */
+    cursor: pointer; /* סמן עכבר בצורת יד */
 }
 
 /* סגנונות לכפתורים בצד הימני של הטבלה */
@@ -236,13 +249,13 @@ input[type="text"], input[type="number"] {
 }
 
 /* סגנונות לשורות מוסתרות */
-.row-dimmed td, .row-dimmed input {
+.row-dimmed td, .row-dimmed input, .row-dimmed select {
     color: #aaa !important; /* צבע אפור לטקסט בשורות מוסתרות */
     background: #f5f5f5 !important; /* רקע אפור בהיר */
 }
 
-.row-dimmed input {
-    pointer-events: none; /* מניעת לחיצה על צ'קבוקס בשורות מוסתרות */
+.row-dimmed input, .row-dimmed select {
+    pointer-events: none; /* מניעת לחיצה על צ'קבוקס או תפריט נפתח בשורות מוסתרות */
 }
 
 .row-dimmed .del-row-btn {
@@ -285,6 +298,11 @@ input[type="text"], input[type="number"] {
         size: A4 portrait; /* גודל דף A4 אנכי */
         margin: 8mm; /* שוליים בהדפסה */
     }
+	
+.floating-window {
+    position: sticky; /* מיקום דביק */
+    top: 18px; /* מרחק מהחלק העליון */
+    left: 18px; /* מרחק מהצד השמאלי */
 }
 
     </style>
@@ -342,69 +360,85 @@ input[type="text"], input[type="number"] {
 </div>
 
 
-<!-- טבלה ראשונה - עם טפריט נפתח -->
-    <div class="box-table-wrapper">
-        <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable(this)">
-            <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete">
-        </button>
-        <button class="icon-btn undoBtn" title="החזר טבלה" style="display:none;" onclick="restoreTable(this)">
-            <img src="https://cdn-icons-png.flaticon.com/512/109/109618.png" alt="Undo">
-        </button>
-        <table class="box-table">
+<!-- טבלה ראשונה עם תפריט נפתח -->
+
+<div class="box-table-wrapper">
+    <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable(this)">
+        <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete">
+    </button>
+    <button class="icon-btn undoBtn" title="החזר טבלה" style="display:none;" onclick="restoreTable(this)">
+        <img src="https://cdn-icons-png.flaticon.com/512/109/109618.png" alt="Undo">
+    </button>
+    <button class="icon-btn addRowBtn" title="הוסף שורה" onclick="addRowToTable(this)">
+        <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Add Row">
+    </button>
+    <table class="box-table">
         <tr>
-            <th>BOX<br>5/41</th>
+            <th class="box-header">BOX<br><span class="box-current">5</span><br>מתוך<br><span class="box-total">41</span></th>
             <th>DESCRIPTION</th>
             <th>P/N</th>
-            <th>Qty>
+            <th>Qty</th>
             <th>CHECK<br>LIST</th>
+            <th class="action-col">ACTION</th>
         </tr>
-        <tr>
-            <td>1</td>
-            <td>MEDIA DISK</td>
-            <td>11100551</td>
-            <td>
+        <tr class="data-row">
+            <td class="row-num-cell">1</td>
+            <td class="desc-col">MEDIA DISK</td>
+            <td class="pn-col">11100551</td>
+            <td class="qty-col">
                 <select>
                     <option>2</option>
                     <option>4</option>
                     <option>6</option>
                 </select>
             </td>
-            <td><input type="checkbox"></td>
+            <td class="check-col"><input type="checkbox"></td>
+            <td class="action-col">
+                <button class="del-row-btn" onclick="hideRow(this)">✖</button>
+                <button class="undo-row-btn" onclick="restoreRow(this)">↩</button>
+            </td>
         </tr>
-    </table
+    </table>
+</div>
 
 
 
-    <!-- טבלה אחרונה - BOX 42 עם מחיקת שורות -->
-    <div class="box-table-wrapper">
-        <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable(this)">
-            <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete">
-        </button>
-        <button class="icon-btn undoBtn" title="החזר טבלה" style="display:none;" onclick="restoreTable(this)">
-            <img src="https://cdn-icons-png.flaticon.com/512/109/109618.png" alt="Undo">
-        </button>
-        <table class="box-table">
-            <tr>
-                <th class="box-header" rowspan="10">BOX<br><span class="box-current"></span><br>מתוך<br><span class="box-total"></span></th>
-                <th>DESCRIPTION</th>
-                <th>P/N</th>
-                <th>Qty</th>
-                <th>CHECK LIST</th>
-                <th class="action-col"></th> <!-- עמודה חדשה עבור כפתורי פעולה -->
-            </tr>
-            <tr>
-                <td class="desc-col">INK EFI MATAN SUPERRANGE XF V3 CYAN</td>
-                <td class="pn-col">45190876</td>
-                <td class="qty-col"><input type="text" style="width:70px"></td>
-                <td class="check-col"><input type="checkbox"></td>
-                <td class="action-col">
-                    <button class="del-row-btn" onclick="hideRow(this)">✖</button>
-                    <button class="undo-row-btn" onclick="restoreRow(this)">↩</button>
-                </td>
-            </tr>
-            <!-- אפשר להוסיף עוד שורות באותו פורמט -->
-        </table>
-    </div>
+
+   <!-- טבלה אחרונה - BOX 42 עם מחיקת שורות -->
+<div class="box-table-wrapper">
+    <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable(this)">
+        <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete">
+    </button>
+    <button class="icon-btn undoBtn" title="החזר טבלה" style="display:none;" onclick="restoreTable(this)">
+        <img src="https://cdn-icons-png.flaticon.com/512/109/109618.png" alt="Undo">
+    </button>
+    <button class="icon-btn addRowBtn" title="הוסף שורה" onclick="addRowToTable(this)">
+        <img src="https://cdn-icons-png.flaticon.com/512/992/992651.png" alt="Add Row">
+    </button>
+    <table class="box-table">
+        <tr>
+            <th class="box-header">BOX<br><span class="box-current"></span><br>מתוך<br><span class="box-total"></span></th>
+            <th>DESCRIPTION</th>
+            <th>P/N</th>
+            <th>Qty</th>
+            <th>CHECK LIST</th>
+            <th class="action-col">ACTION</th>
+        </tr>
+        <tr class="data-row">
+            <td class="row-num-cell">1</td>
+            <td class="desc-col">INK EFI MATAN SUPERRANGE XF V3 CYAN</td>
+            <td class="pn-col">45190876</td>
+            <td class="qty-col"><input type="text" placeholder="כמות"></td>
+            <td class="check-col"><input type="checkbox"></td>
+            <td class="action-col">
+                <button class="del-row-btn" onclick="hideRow(this)">✖</button>
+                <button class="undo-row-btn" onclick="restoreRow(this)">↩</button>
+            </td>
+        </tr>
+        <!-- אפשר להוסיף עוד שורות באותו פורמט -->
+    </table>
+</div>
+
 
     <script>
 	
@@ -541,6 +575,9 @@ function restoreTable(btn) {
 // קריאה ראשונית לעדכון מספרי BOX ומספרי שורה
 updateBoxNumbers();
 updateAllRowNumbers();
+
+
+
 
     </script>
 
