@@ -7,8 +7,8 @@
     <title>Vutek 5r+ - Box Status Integration</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
-/* סגנונות כלליים לדף */
-/* סגנונות כלליים לדף */
+
+/*------------------------------- לא לגעת  סגנונות כלליים לדף ----------------------------------------*/
 body {
     font-family: Arial, sans-serif; /* הגדרת גופן ברירת מחדל */
     background: #fff; /* צבע רקע לבן */
@@ -344,18 +344,18 @@ hr.air {
     max-width: 98vw; /* רוחב מקסימלי למניעת גלישה */
     margin: 15px auto; /* מיקום במרכז עם שוליים עליונים ותחתונים */
     border: 0; /* הסרת גבול ברירת מחדל */
-    border-top: 3px solid #ff0000; /* קו אדום, עובי ניתן לשינוי */
+    border-top: 5px solid #ff0000; /* קו אדום, עובי ניתן לשינוי */
     height: 0; /* גובה אפס כדי להציג רק את הקו */
 }
 
 /* סגנונות להדפסה */
 @media
-
+/*------------------------------- לא לגעת   סיום סגנונות כלליים לדף ----------------------------------------*/
     </style>
 </head>
 <body>
 
-    <!-- חלון כפתורים צף -->
+    <!------------------------------------- לא לגעת  חלון כפתורים צף---------------------- -->
     <div class="floating-window">
         <button title="הצג כ-PDF" onclick="window.print()">
             <img src="https://raw.githubusercontent.com/RL3printer/Matan_EFI/main/icons/pdficon.png" alt="PDF">
@@ -366,11 +366,14 @@ hr.air {
         <button class="add-btn" title="הוסף טבלה ריקה" onclick="addEmptyTable()">+</button>
     </div>
 
+<!------------------------------------- לא לגעת סיום   חלון כפתורים צף---------------------- -->
+
+<!------------------------------------- כותרת של הדף---------------------- -->
     <h1>Vutek 5r+ - Box Status Integration</h1>
+<!------------------------------------- כותרת של הדף---------------------- -->
 	
 	
-	
-	<!-- טבלה ראשונה - BOX 1 -->
+<!---------------------------- טבלה מסוג 1 - BOX 1 ---------------------------->
 <div class="box-table-wrapper">
     <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable(this)">
         <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete">
@@ -414,13 +417,13 @@ hr.air {
     </table>
 </div>
 
-
+<!---------------------------- טבלה מסוג 1 סיום- BOX 1 ---------------------------->
 	
 <!-- קו מפריד בין טבלאות, לא יופיע בהדפסה -->
 <hr class="noPrint air">
 
 
-<!-- טבלה ראשונה עם תפריט נפתח -->
+<!----------------------------- טבלה ראשונה עם תפריט נפתח --------------------->
 
 <div class="box-table-wrapper">
     <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable(this)">
@@ -460,11 +463,11 @@ hr.air {
         </tr>
     </table>
 </div>
+<!----------------------------- טבלה ראשונה עם תפריט נפתח סיום  --------------------->
 
 
 
-
-   <!-- טבלה אחרונה - BOX 42 עם מחיקת שורות -->
+   <!-------------------------- טבלה אחרונה - BOX 42 עם מחיקת שורות ------------------>
 <div class="box-table-wrapper">
     <button class="icon-btn trashBtn" title="הסר טבלה" onclick="dimTable(this)">
         <img src="https://cdn-icons-png.flaticon.com/512/1214/1214428.png" alt="Delete">
@@ -499,18 +502,20 @@ hr.air {
     </table>
 </div>
 
-<!-- אזור הערות בסוף הדף, מתחת לכל הטבלאות -->
+ <!-------------------------- טבלה אחרונה - BOX 42 עם מחיקת שורות ------------------>
+	
+<!---------------------- אזור הערות בסוף הדף, מתחת לכל הטבלאות ---------------------->
 <div class="notes-section">
     <h2>הערות</h2>
     <textarea id="notes-area" placeholder="כתוב כאן את ההערות שלך..." rows="5"></textarea>
     
 </div>
-
+<!---------------------- אזור הערות בסוף הדף, מתחת לכל הטבלאות ---------------------->
 
     <script>
-	
-	
-	 // קוד JavaScript פונקציות 
+
+ <!----------------------JavaScript  ----------------------> 
+	   
 // עדכון מספור BOX רק לטבלאות גלויות
 function updateBoxNumbers() {
     const visibleWrappers = Array.from(document.querySelectorAll('.box-table-wrapper:not(.dimmed)'));
