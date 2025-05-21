@@ -499,16 +499,14 @@ select {
 <div class="notes-section">
     <h2>הערות</h2>
     <textarea id="notes-area" placeholder="כתוב כאן את ההערות שלך..." rows="5"></textarea>
-   </div>
-
+    
+</div>
 
 
     <script>
 	
 	
 	 // קוד JavaScript פונקציות 
-	
-       // עדכון מספור BOX רק לטבלאות גלויות
 // עדכון מספור BOX רק לטבלאות גלויות
 function updateBoxNumbers() {
     const visibleWrappers = Array.from(document.querySelectorAll('.box-table-wrapper:not(.dimmed)'));
@@ -537,7 +535,7 @@ function updateAllRowNumbers() {
     tables.forEach(table => updateRowNumbers(table));
 }
 
-// הוספת טבלה חדשה
+// הוספת טבלה חדשה לפני אזור ההערות
 function addEmptyTable() {
     const wrapper = document.createElement('div');
     wrapper.className = 'box-table-wrapper';
@@ -558,7 +556,7 @@ function addEmptyTable() {
                 <th>P/N</th>
                 <th>Qty</th>
                 <th>CHECK LIST</th>
-                <th class="action-col">Del</th>
+                <th class="action-col">ACTION</th>
             </tr>
             <tr class="data-row">
                 <td class="row-num-cell"></td>
@@ -573,7 +571,13 @@ function addEmptyTable() {
             </tr>
         </table>
     `;
-    document.body.appendChild(wrapper);
+    // הוספת הטבלה החדשה לפני אזור ההערות
+    const notesSection = document.querySelector('.notes-section');
+    if (notesSection) {
+        document.body.insertBefore(wrapper, notesSection);
+    } else {
+        document.body.appendChild(wrapper);
+    }
     updateBoxNumbers(); // עדכון מספרי BOX לאחר הוספת טבלה
     updateAllRowNumbers(); // עדכון מספרי שורה
 }
@@ -635,12 +639,22 @@ function restoreTable(btn) {
     updateBoxNumbers(); // עדכון מספרי BOX לאחר שחזור
 }
 
-// קריאה ראשונית לעדכון מספרי BOX ומספרי שורה
-updateBoxNumbers();
-updateAllRowNumbers();
+// שמירת הערות (פונקציה בסיסית, ניתן להרחיב)
+function saveNotes() {
+    const notes = document.getElementById('notes-area').value;
+    localStorage.setItem('notes', notes); // שמירה ב-localStorage
+    alert('ההערות נשמרו בהצלחה!');
+}
 
-
-
+// טעינת הערות משמירה קודמת בעת טעינת הדף
+window.onload = function() {
+    const savedNotes = localStorage.getItem('notes');
+    if (savedNotes) {
+        document.getElementById('notes-area').value = savedNotes;
+    }
+    updateBoxNumbers(); // עדכון מספרי BOX בעת טעינה
+    updateAllRowNumbers(); // עדכון מספרי שורה בעת טעינה
+};
 
     </script>
 
