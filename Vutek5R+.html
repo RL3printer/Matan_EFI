@@ -7,6 +7,7 @@
     <title>Vutek 5r+ - Box Status Integration</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
+/* סגנונות כלליים לדף  CSS */
 /* סגנונות כלליים לדף */
 body {
     font-family: Arial, sans-serif; /* הגדרת גופן ברירת מחדל */
@@ -26,7 +27,7 @@ h1 {
 /* סגנונות לטבלה ולמסגרת סביבה */
 .box-table-wrapper {
     position: relative; /* מיקום יחסי כדי לאפשר מיקום מוחלט של כפתורים בתוכו */
-    width: 900px; /* רוחב מוגדל לטבלה כפי שביקשת */
+    width: 900px; /* רוחב מוגדל לטבלה במסכים גדולים */
     max-width: 98vw; /* רוחב מקסימלי למניעת גלישה במסכים קטנים */
     margin: 18px auto 0 auto; /* מיקום במרכז הדף עם שוליים עליונים */
     page-break-inside: avoid; /* מניעת שבירת טבלה בהדפסה */
@@ -34,7 +35,6 @@ h1 {
 
 .box-table {
     width: 100%; /* רוחב מלא של המסגרת */
-   
     border-collapse: collapse; /* איחוד גבולות התאים */
     background: #fff; /* רקע לבן לטבלה */
     box-shadow: 0 2px 8px rgba(0,0,0,0.04); /* צל קל סביב הטבלה לעומק */
@@ -87,12 +87,12 @@ h1 {
 }
 
 .pn-col {
-    width: 15%; /* רוחב מוקטן מאוד לתא מק"ט */
+    width: 5%; /* רוחב מוקטן מאוד לתא מק"ט */
     font-weight: bold; /* טקסט מודגש */
 }
 
 .qty-col {
-    width: 15%; /* רוחב מוקטן מאוד לתא כמות */
+    width: 5%; /* רוחב מוקטן מאוד לתא כמות */
     font-weight: bold; /* טקסט מודגש */
 }
 
@@ -192,8 +192,8 @@ select {
 /* סגנונות לחלון הכפתורים הצף */
 .floating-window {
     position: fixed; /* מיקום קבוע בצד שמאל למעלה */
-    top: 18px; /* מרחק מהחלק העליון */
-    left: 18px; /* מרחק מהצד השמאלי */
+    top: 10px; /* מרחק מהחלק העליון */
+    left: 10px; /* מרחק מהצד השמאלי */
     background: #fff; /* רקע לבן */
     border: 2px solid #23b6d8; /* מסגרת כחולה */
     border-radius: 16px; /* פינות מעוגלות */
@@ -279,9 +279,61 @@ select {
     font-size: 1em; /* גודל גופן רגיל */
 }
 
+/* סגנונות לאזור הערות בסוף הדף */
+.notes-section {
+    width: 900px; /* רוחב תואם לטבלאות */
+    max-width: 98vw; /* רוחב מקסימלי למניעת גלישה */
+    margin: 20px auto; /* מיקום במרכז הדף עם שוליים עליונים */
+    padding: 10px; /* ריווח פנימי */
+    background: #fff; /* רקע לבן */
+    border: 1px solid #176c4c; /* מסגרת ירוקה תואמת לטבלאות */
+    border-radius: 5px; /* פינות מעוגלות קלות */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04); /* צל קל לעומק */
+}
+
+.notes-section h2 {
+    color: #176c4c; /* צבע ירוק כהה לכותרת */
+    font-size: 1.2em; /* גודל גופן מעט גדול */
+    margin: 0 0 10px 0; /* שוליים תחתונים */
+    text-align: center; /* מיקום במרכז */
+}
+
+#notes-area {
+    width: 100%; /* רוחב מלא של האזור */
+    border: 1px solid #ccc; /* מסגרת אפורה דקה */
+    border-radius: 5px; /* פינות מעוגלות */
+    padding: 10px; /* ריווח פנימי */
+    font-family: Arial, sans-serif; /* גופן תואם לטבלה */
+    font-size: 1em; /* גודל גופן רגיל */
+    resize: vertical; /* אפשרות לשנות גובה בלבד */
+    box-sizing: border-box; /* כולל את המסגרת והריווח בחישוב הרוחב */
+}
+
+#notes-area:focus {
+    outline: none; /* הסרת מסגרת פוקוס */
+    border-color: #176c4c; /* שינוי צבע מסגרת בעת פוקוס לירוק */
+}
+
+.save-notes-btn {
+    display: block; /* תצוגה כבלוק */
+    margin: 10px auto 0 auto; /* מיקום במרכז עם שוליים עליונים */
+    padding: 8px 15px; /* ריווח פנימי */
+    background: #23b6d8; /* רקע כחול */
+    color: #fff; /* צבע טקסט לבן */
+    border: none; /* ללא מסגרת */
+    border-radius: 5px; /* פינות מעוגלות */
+    cursor: pointer; /* סמן עכבר בצורת יד */
+    font-size: 1em; /* גודל גופן רגיל */
+    transition: background 0.2s; /* אנימציה לשינוי צבע */
+}
+
+.save-notes-btn:hover {
+    background: #176c4c; /* שינוי צבע לירוק כהה בעת ריחוף */
+}
+
 /* סגנונות להדפסה */
 @media print {
-    .floating-window, .icon-btn {
+    .floating-window, .icon-btn, .save-notes-btn {
         display: none !important; /* הסתרת כפתורים בהדפסה */
     }
     .box-table-wrapper.dimmed {
@@ -294,16 +346,23 @@ select {
         font-size: 0.93em !important; /* גודל גופן קטן */
         padding: 2px 2px !important; /* ריווח פנימי קטן יותר */
     }
+    .notes-section {
+        border: 1px solid #176c4c !important; /* שמירה על מסגרת בהדפסה */
+    }
+    #notes-area {
+        border: 1px solid #ccc !important; /* שמירה על מסגרת בהדפסה */
+    }
     @page {
         size: A4 portrait; /* גודל דף A4 אנכי */
         margin: 8mm; /* שוליים בהדפסה */
     }
-	
-.floating-window {
-    position: sticky; /* מיקום דביק */
-    top: 18px; /* מרחק מהחלק העליון */
-    left: 18px; /* מרחק מהצד השמאלי */
 }
+
+/* סגנונות רספונסיביים למסכים קטנים (ניידים) */
+@media screen and (max-width: 600px) {
+    .box-table-wrapper {
+        width: 100%; /* רוחב מלא של המסך בנייד */
+        margin: 10px 0 0 0; /* ש
 
     </style>
 </head>
@@ -437,6 +496,12 @@ select {
         </tr>
         <!-- אפשר להוסיף עוד שורות באותו פורמט -->
     </table>
+</div>
+<!-- אזור הערות בסוף הדף -->
+<div class="notes-section">
+    <h2>הערות</h2>
+    <textarea id="notes-area" placeholder="כתוב כאן את ההערות שלך..." rows="5"></textarea>
+    <button onclick="saveNotes()" class="save-notes-btn">שמור הערות</button>
 </div>
 
 
