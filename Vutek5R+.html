@@ -35,6 +35,7 @@ h1 {
 
 .box-table {
     width: 100%; /* רוחב מלא של המסגרת */
+    table-layout: fixed; /* קיבוע רוחב התאים לפי הגדרות CSS */
     border-collapse: collapse; /* איחוד גבולות התאים */
     background: #fff; /* רקע לבן לטבלה */
     box-shadow: 0 2px 8px rgba(0,0,0,0.04); /* צל קל סביב הטבלה לעומק */
@@ -288,37 +289,43 @@ select {
     background: #fff; /* רקע לבן */
     border: 1px solid #176c4c; /* מסגרת ירוקה תואמת לטבלאות */
     border-radius: 5px; /* פינות מעוגלות קלות */
-    box-shadow: 0 2px 8px rgba(0,0,0,0.04); /* צל קל לעומק */
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04); /* צל קל לעומק, תואם לטבלאות */
 }
 
 .notes-section h2 {
-    color: #176c4c; /* צבע ירוק כהה לכותרת */
+    color: #176c4c; /* צבע ירוק כהה לכותרת, תואם לטבלאות */
     font-size: 1.2em; /* גודל גופן מעט גדול */
     margin: 0 0 10px 0; /* שוליים תחתונים */
     text-align: center; /* מיקום במרכז */
+    background: #e6f2ef; /* רקע ירוק בהיר, תואם לכותרות הטבלאות */
+    padding: 5px; /* ריווח פנימי */
+    border-radius: 3px; /* פינות מעוגלות קלות */
 }
 
 #notes-area {
     width: 100%; /* רוחב מלא של האזור */
-    border: 1px solid #ccc; /* מסגרת אפורה דקה */
+    border: 1px solid #176c4c; /* מסגרת ירוקה דקה, תואמת לטבלאות */
     border-radius: 5px; /* פינות מעוגלות */
     padding: 10px; /* ריווח פנימי */
     font-family: Arial, sans-serif; /* גופן תואם לטבלה */
     font-size: 1em; /* גודל גופן רגיל */
+    color: #176c4c; /* צבע טקסט ירוק כהה, תואם לטבלאות */
     resize: vertical; /* אפשרות לשנות גובה בלבד */
     box-sizing: border-box; /* כולל את המסגרת והריווח בחישוב הרוחב */
+    background: #fff; /* רקע לבן, תואם לטבלאות */
 }
 
 #notes-area:focus {
     outline: none; /* הסרת מסגרת פוקוס */
-    border-color: #176c4c; /* שינוי צבע מסגרת בעת פוקוס לירוק */
+    border-color: #176c4c; /* שמירה על צבע מסגרת בעת פוקוס */
+    box-shadow: 0 0 3px rgba(23, 108, 76, 0.3); /* צל קל בעת פוקוס */
 }
 
 .save-notes-btn {
     display: block; /* תצוגה כבלוק */
     margin: 10px auto 0 auto; /* מיקום במרכז עם שוליים עליונים */
     padding: 8px 15px; /* ריווח פנימי */
-    background: #23b6d8; /* רקע כחול */
+    background: #23b6d8; /* רקע כחול, תואם לכפתורי הוספה */
     color: #fff; /* צבע טקסט לבן */
     border: none; /* ללא מסגרת */
     border-radius: 5px; /* פינות מעוגלות */
@@ -328,7 +335,7 @@ select {
 }
 
 .save-notes-btn:hover {
-    background: #176c4c; /* שינוי צבע לירוק כהה בעת ריחוף */
+    background: #176c4c; /* שינוי צבע לירוק כהה בעת ריחוף, תואם לכפתורים אחרים */
 }
 
 /* סגנונות להדפסה */
@@ -343,26 +350,8 @@ select {
         box-shadow: none !important; /* הסרת צל מהטבלה */
     }
     .box-table th, .box-table td {
-        font-size: 0.93em !important; /* גודל גופן קטן */
-        padding: 2px 2px !important; /* ריווח פנימי קטן יותר */
-    }
-    .notes-section {
-        border: 1px solid #176c4c !important; /* שמירה על מסגרת בהדפסה */
-    }
-    #notes-area {
-        border: 1px solid #ccc !important; /* שמירה על מסגרת בהדפסה */
-    }
-    @page {
-        size: A4 portrait; /* גודל דף A4 אנכי */
-        margin: 8mm; /* שוליים בהדפסה */
-    }
-}
+        font-size:
 
-/* סגנונות רספונסיביים למסכים קטנים (ניידים) */
-@media screen and (max-width: 600px) {
-    .box-table-wrapper {
-        width: 100%; /* רוחב מלא של המסך בנייד */
-        margin: 10px 0 0 0; /* ש
 
     </style>
 </head>
@@ -497,12 +486,13 @@ select {
         <!-- אפשר להוסיף עוד שורות באותו פורמט -->
     </table>
 </div>
-<!-- אזור הערות בסוף הדף -->
+
+<!-- אזור הערות בסוף הדף, מתחת לכל הטבלאות -->
 <div class="notes-section">
     <h2>הערות</h2>
     <textarea id="notes-area" placeholder="כתוב כאן את ההערות שלך..." rows="5"></textarea>
-    <button onclick="saveNotes()" class="save-notes-btn">שמור הערות</button>
-</div>
+   </div>
+
 
 
     <script>
