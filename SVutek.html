@@ -63,6 +63,7 @@
     .section-title.computers { color: #1c7be8; border-bottom: 2px solid #1c7be8; }
     .section-title.new { color: #1cae3a; border-bottom: 2px solid #1cae3a; }
     .section-title.old { color: #e86b1c; border-bottom: 2px solid #e86b1c; }
+    .section-title.custom { color: #ff5500; border-bottom: 2px solid #ff5500; }
     .custom-table {
       width: 100%;
       border-collapse: collapse;
@@ -159,6 +160,18 @@
     }
     .floating-window img:hover {
       box-shadow: 0 3px 12px rgba(255,153,0,0.19);
+    }
+    /* סגנונות לאזור הערות */
+    .notes-area {
+      width: 100%;
+      margin-top: 10px;
+      padding: 5px;
+      box-sizing: border-box;
+      border: 1px solid #bbb;
+      border-radius: 4px;
+      font-family: Arial, sans-serif;
+      font-size: 1em;
+      resize: vertical;
     }
     @media (max-width: 900px) {
       .main-container {
@@ -285,6 +298,14 @@
           <tr><td>BCC uC</td><td><input type="text"></td></tr>
           <tr><td>BCC fpga</td><td><input type="text"></td></tr>
         </table>
+      </div>
+      <!-- טבלה חדשה מתחת לטבלאות הקיימות בעמודה השמאלית -->
+      <div>
+        
+        
+        <!-- אזור הערות מתחת לטבלה החדשה -->
+        <div class="section-title custom">הערות</div>
+        <textarea class="notes-area" rows="3" placeholder="כתוב כאן את ההערות שלך..."></textarea>
       </div>
     </div>
     <!-- עמודה ימנית -->
