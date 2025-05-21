@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style>
 /* סגנונות כלליים לדף */
+
 body {
     font-family: Arial, sans-serif; /* הגדרת גופן ברירת מחדל */
     background: #fff; /* צבע רקע לבן */
@@ -34,7 +35,7 @@ h1 {
 
 .box-table {
     width: 100%; /* רוחב מלא של המסגרת */
-    
+    table-layout: fixed; /* קיבוע רוחב התאים לפי הגדרות CSS */
     border-collapse: collapse; /* איחוד גבולות התאים */
     background: #fff; /* רקע לבן לטבלה */
     box-shadow: 0 2px 8px rgba(0,0,0,0.04); /* צל קל סביב הטבלה לעומק */
@@ -87,12 +88,12 @@ h1 {
 }
 
 .pn-col {
-    width: 15%; /* רוחב מוקטן מאוד לתא מק"ט */
+    width: 5%; /* רוחב מוקטן מאוד לתא מק"ט */
     font-weight: bold; /* טקסט מודגש */
 }
 
 .qty-col {
-    width: 15%; /* רוחב מוקטן מאוד לתא כמות */
+    width: 5%; /* רוחב מוקטן מאוד לתא כמות */
     font-weight: bold; /* טקסט מודגש */
 }
 
@@ -281,7 +282,7 @@ select {
 
 /* סגנונות לאזור הערות בסוף הדף */
 .notes-section {
-    width: 880px; /* רוחב תואם לטבלאות */
+    width: 900px; /* רוחב תואם לטבלאות */
     max-width: 98vw; /* רוחב מקסימלי למניעת גלישה */
     margin: 20px auto; /* מיקום במרכז הדף עם שוליים עליונים */
     padding: 10px; /* ריווח פנימי */
@@ -325,44 +326,8 @@ select {
     margin: 10px auto 0 auto; /* מיקום במרכז עם שוליים עליונים */
     padding: 8px 15px; /* ריווח פנימי */
     background: #23b6d8; /* רקע כחול, תואם לכפתורי הוספה */
-    color: #fff; /* צבע טקסט לבן */
-    border: none; /* ללא מסגרת */
-    border-radius: 5px; /* פינות מעוגלות */
-    cursor: pointer; /* סמן עכבר בצורת יד */
-    font-size: 1em; /* גודל גופן רגיל */
-    transition: background 0.2s; /* אנימציה לשינוי צבע */
-}
+    color
 
-.save-notes-btn:hover {
-    background: #176c4c; /* שינוי צבע לירוק כהה בעת ריחוף, תואם לכפתורים אחרים */
-}
-
-/* סגנונות להדפסה */
-@media print {
-    .floating-window, .icon-btn, .save-notes-btn {
-        display: none !important; /* הסתרת כפתורים בהדפסה */
-    }
-    .box-table-wrapper.dimmed {
-        display: none !important; /* הסתרת טבלאות מוסתרות בהדפסה */
-    }
-    .box-table {
-        box-shadow: none !important; /* הסרת צל מהטבלה */
-    }
-    .box-table th, .box-table td {
-        font-size: 0.93em !important; /* גודל גופן קטן */
-        padding: 2px 2px !important; /* ריווח פנימי קטן יותר */
-    }
-    .action-col, .action-col * {
-        display: none !important; /* הסתרת עמודת הפעולות (ACTION) בהדפסה */
-    }
-    .notes-section {
-        border: 1px solid #176c4c !important; /* שמירה על מסגרת בהדפסה */
-    }
-    #notes-area {
-        border: 1px solid #176c4c !important; /* שמירה על מסגרת בהדפסה */
-    }
-    @page {
-        size: A4 portrait; /* גוד
 
 
     </style>
@@ -427,6 +392,11 @@ select {
         <!-- שורות נוספות כפי שמופיעות בקוד שלך -->
     </table>
 </div>
+
+
+	
+<!-- קו מפריד בין טבלאות, לא יופיע בהדפסה -->
+<hr class="noPrint air">
 
 
 <!-- טבלה ראשונה עם תפריט נפתח -->
